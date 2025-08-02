@@ -26,6 +26,23 @@ $ npm install
 $ npm start build
 ```
 
+Usage
+-----
+
+### Development
+
+```
+$ rulebook preview -a 127.0.0.1 -p 8080 src
+```
+
+### Production
+
+```
+$ rulebook make -o dist src
+$ rulebook serve   -a 127.0.0.1 -p 8080 dist
+$ open http://127.0.0.1:8080
+```
+
 Design Criterias
 ----------------
 
