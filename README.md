@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/rse/rulebook/master/rulebook-1-art/rulebook-black.svg" width="200" align="right" alt=""/>
+<img src="https://raw.githubusercontent.com/rse/rulebook/master/rulebook-1-art/rulebook-black.svg" width="300" align="right" alt=""/>
 
 Rulebook
 ========
