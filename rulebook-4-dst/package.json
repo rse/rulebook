@@ -1,0 +1,27 @@
+{
+    "private":         true,
+    "name":            "rulebook-4-dst",
+    "description":     "Policy Rule Rendering Application",
+    "keywords":        [ "policy", "rule", "rendering", "app" ],
+    "homepage":        "http://github.com/rse/rulebook",
+    "repository":      { "url": "git+https://github.com/rse/rulebook.git", "type": "git" },
+    "bugs":            { "url": "http://github.com/rse/rulebook/issues" },
+    "version":         "0.0.0",
+    "license":         "GPL-3.0-only",
+    "author": {
+        "name":        "Dr. Ralf S. Engelschall",
+        "email":       "rse@engelschall.com",
+        "url":         "http://engelschall.com"
+    },
+    "devDependencies": {
+        "@rse/stx":    "1.0.7",
+        "shx":         "0.4.0"
+    },
+    "engines" : {
+        "npm":         ">=10.0.0",
+        "node":        ">=22.0.0"
+    },
+    "scripts": {
+        "start":       "stx -v4 -c etc/stx.conf"
+    }
+}
