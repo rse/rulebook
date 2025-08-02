@@ -30,8 +30,8 @@ Design Criterias
 ----------------
 
 The design of **Rulebook** strictly followed the following particular
-design criterias, driven by the experiences and demands in the *msg CTO
-Policy* project of Dr. Ralf S. Engelschall:
+design criterias, driven by the demands in the *msg CTO Policy* project
+of Dr. Ralf S. Engelschall:
 
 - FIXME
 
