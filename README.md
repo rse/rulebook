@@ -52,6 +52,15 @@ of Dr. Ralf S. Engelschall:
 
 - FIXME
 
+Architecture
+------------
+
+- [rulebook-1-art](./rulebook-1-art): artwork
+- [rulebook-2-app](./rulebook-2-app): web application
+- [rulebook-3-cli](./rulebook-3-cli): command-line interface
+- [rulebook-4-dst](./rulebook-4-dst): distribution
+- [rulebook-5-smp](./rulebook-5-smp): sample
+
 License
 -------
 
