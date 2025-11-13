@@ -59,7 +59,7 @@ export default defineComponent({
     created () {
     },
     mounted () {
-        /*  remove the potentially existin hash (in case of an exit)  */
+        /*  remove the potentially existing hash (in case of an exit)  */
         history.replaceState(null, document.title, window.location.pathname + window.location.search)
     },
     methods: {
