@@ -39,7 +39,7 @@ $ rulebook preview -a 127.0.0.1 -p 8080 src
 
 ```
 $ rulebook make -o dist src
-$ rulebook serve   -a 127.0.0.1 -p 8080 dist
+$ rulebook serve -a 127.0.0.1 -p 8080 dist
 $ open http://127.0.0.1:8080
 ```
 
