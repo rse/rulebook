@@ -133,7 +133,7 @@ async function cmdPreview (
                 })
         }, async (argv: any) => cmdServe(
             { verbose: argv.v },
-            { a: argv.a, p: argv.p },
+            { addr: argv.a, port: argv.p },
             { dir: argv.dir }
         ))
         .command("preview <dir>", "preview rulebook rendering from source", (yargs) => {
@@ -160,7 +160,7 @@ async function cmdPreview (
                 })
         }, async (argv: any) => cmdPreview(
             { verbose: argv.v },
-            { a: argv.a, p: argv.p },
+            { addr: argv.a, port: argv.p },
             { dir: argv.dir }
         ))
         .help("h", "show usage help")

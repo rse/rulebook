@@ -18,13 +18,12 @@ export default Vite.defineConfig(({ command, mode }) => ({
         arraybuffer(),
         tscPlugin({
             tscArgs: [ "--project", "etc/tsc.json" ],
-            packageManager: "npx" as "npm",
             prebuild: true
         }),
         nodeExternals({
             builtins: true,
+            deps:     true,
             devDeps:  false,
-            deps:     false,
             optDeps:  false,
             peerDeps: false
         })
