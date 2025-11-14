@@ -1,5 +1,6 @@
 ~$*
 node_modules
+etc/tsc.tsbuildinfo
 dst-stage1
 dst-stage2
 dst-stage3
