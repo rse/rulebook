@@ -5,7 +5,7 @@
 */
 
 /*  internal dependencies  */
-import path              from "node:path"
+// import path              from "node:path"
 
 /*  external dependencies  */
 import CLIio             from "cli-io"
@@ -13,6 +13,8 @@ import syspath           from "syspath"
 import yargs             from "yargs"
 import { hideBin }       from "yargs/helpers"
 import chalk             from "chalk"
+// import jsYAML            from "js-yaml"
+// import { type }          from "arktype"
 
 /*  internal dependencies  */
 // @ts-ignore
@@ -21,11 +23,48 @@ import pkgJSON           from "../../package.json?raw" with { type: "json" }
 /*  central CLI context  */
 let cli: CLIio | null = null
 
+/*  command handler: make  */
+async function cmdMake (
+    globalOpts: { verbose: boolean },
+    cmdOpts:    { output: string },
+    cmdArgs:    { dir: string }
+) {
+    if (cli === null)
+        throw new Error("CLI not initialized")
+    cli.log("info", `make: output=${cmdOpts.output} dir=${cmdArgs.dir} verbose=${globalOpts.verbose}`)
+    /*  TODO: implement make functionality  */
+}
+
+/*  command handler: serve  */
+async function cmdServe (
+    globalOpts: { verbose: boolean },
+    cmdOpts:    { addr: string, port: number },
+    cmdArgs:    { dir: string }
+) {
+    if (cli === null)
+        throw new Error("CLI not initialized")
+    cli.log("info", `serve: address=${cmdOpts.addr} port=${cmdOpts.port} dir=${cmdArgs.dir} verbose=${globalOpts.verbose}`)
+    /*  TODO: implement serve functionality  */
+}
+
+/*  command handler: preview  */
+async function cmdPreview (
+    globalOpts: { verbose: boolean },
+    cmdOpts:    { addr: string, port: number },
+    cmdArgs:    { dir: string }
+) {
+    if (cli === null)
+        throw new Error("CLI not initialized")
+    cli.log("info", `preview: address=${cmdOpts.addr} port=${cmdOpts.port} dir=${cmdArgs.dir} verbose=${globalOpts.verbose}`)
+    /*  TODO: implement preview functionality  */
+}
+
 /*  establish asynchronous environment  */
 ;(async () => {
     /*  determine system paths  */
+    /* eslint no-unused-vars: off */
     const { dataDir } = syspath({
-        appName: "speechflow",
+        appName: "rulebook",
         dataDirAutoCreate: true
     })
 
@@ -33,65 +72,102 @@ let cli: CLIio | null = null
     const coerce = (arg: string) => Array.isArray(arg) ? arg[arg.length - 1] : arg
     const args = await yargs()
         /* eslint @stylistic/indent: off */
-        .usage(
-            "Usage: $0 " +
-            "[-h|--help] " +
-            "[-V|--version] " +
-            "[-a|--address <ip-address>] " +
-            "[-p|--port <tcp-port>] " +
-            "[-T|--tmpdir <directory>] " +
-            "[<argument> [...]]"
-        )
+        .usage("Usage: $0 [<global-options>] <command> [<command-options>] [<command-arguments>]")
         .version(false)
-        .option("V", {
-            alias:    "version",
+        .option("version", {
+            alias:    "V",
             type:     "boolean",
             array:    false,
             coerce,
             default:  false,
             describe: "show program version information"
         })
-        .option("v", {
-            alias:    "log-level",
-            type:     "string",
+        .option("verbose", {
+            alias:    "v",
+            type:     "boolean",
             array:    false,
             coerce,
-            nargs:    1,
-            default:  "warning",
-            describe: "level for verbose logging ('none', 'error', 'warning', 'info', 'debug')"
+            default:  false,
+            describe: "enable verbose logging"
         })
-        .option("a", {
-            alias:    "address",
-            type:     "string",
-            array:    false,
-            coerce,
-            nargs:    1,
-            default:  "0.0.0.0",
-            describe: "IP address for REST/WebSocket API"
-        })
-        .option("p", {
-            alias:    "port",
-            type:     "number",
-            array:    false,
-            coerce,
-            nargs:    1,
-            default:  8484,
-            describe: "TCP port for REST/WebSocket API"
-        })
-        .option("T", {
-            alias:    "tmpdir",
-            type:     "string",
-            array:    false,
-            coerce,
-            nargs:    1,
-            default:  path.join(dataDir, "tmp"),
-            describe: "directory for temporary files"
-        })
+        .command("make <dir>", "make rulebook rendering from source", (yargs) => {
+            return yargs
+                .option("output", {
+                    alias:        "o",
+                    type:         "string",
+                    array:        false,
+                    nargs:        1,
+                    demandOption: true,
+                    describe:     "output directory"
+                })
+                .positional("dir", {
+                    type:         "string",
+                    describe:     "rulebook source directory"
+                })
+        }, async (argv: any) => cmdMake(
+            { verbose: argv.verbose },
+            { output:  argv.output },
+            { dir:     argv.dir }
+        ))
+        .command("serve <dir>", "serve rulebook rendering", (yargs) => {
+            return yargs
+                .option("address", {
+                    alias:    "a",
+                    type:     "string",
+                    array:    false,
+                    nargs:    1,
+                    default:  "0.0.0.0",
+                    describe: "IP address to bind to"
+                })
+                .option("port", {
+                    alias:    "p",
+                    type:     "number",
+                    array:    false,
+                    nargs:    1,
+                    default:  8484,
+                    describe: "TCP port to bind to"
+                })
+                .positional("dir", {
+                    type:     "string",
+                    describe: "rulebook source directory"
+                })
+        }, async (argv: any) => cmdServe(
+            { verbose: argv.v },
+            { a: argv.a, p: argv.p },
+            { dir: argv.dir }
+        ))
+        .command("preview <dir>", "preview rulebook rendering from source", (yargs) => {
+            return yargs
+                .option("address", {
+                    alias:    "a",
+                    type:     "string",
+                    array:    false,
+                    nargs:    1,
+                    default:  "0.0.0.0",
+                    describe: "IP address to bind to"
+                })
+                .option("port", {
+                    alias:    "p",
+                    type:     "number",
+                    array:    false,
+                    nargs:    1,
+                    default:  8484,
+                    describe: "TCP port to bind to"
+                })
+                .positional("dir", {
+                    type:     "string",
+                    describe: "rulebook source directory"
+                })
+        }, async (argv: any) => cmdPreview(
+            { verbose: argv.v },
+            { a: argv.a, p: argv.p },
+            { dir: argv.dir }
+        ))
         .help("h", "show usage help")
         .alias("h", "help")
         .showHelpOnFail(true)
         .strict()
-        .demand(0)
+        .demandCommand(1, "Please specify a command")
         .parse(hideBin(process.argv))
 
     /*  short-circuit version request  */
@@ -104,9 +180,10 @@ let cli: CLIio | null = null
     }
 
     /*  establish CLI environment  */
+    const logLevel = args.v ? "info" : "warning"
     cli = new CLIio({
         encoding:  "utf8",
-        logLevel:  args.v,
+        logLevel,
         logTime:   false,
         logPrefix: "rulebook"
     })
