@@ -258,11 +258,11 @@ export class RulebookParser {
                 if (assessment === undefined)
                     continue
                 if (assessment.Assess !== undefined)
-                    for (const assessStatement of assessment.Assess)
+                    for (let i = 0; i < assessment.Assess.length; i++)
                         for (const prop of [ "MUST", "SHOULD", "MAY", "WONT" ] as const)
-                            if (assessStatement[prop] !== undefined)
+                            if (assessment.Assess[i][prop] !== undefined)
                                 this.checkRefCtx(`aspect with id ${aspect.obj.Id}`, aspect,
-                                    [ "Assessment", key, "Assess", prop ], assessStatement[prop])
+                                    [ "Assessment", key, "Assess", String(i), prop ], assessment.Assess[i][prop]!)
             }
         }
 
