@@ -32,13 +32,13 @@ Usage
 ### Development
 
 ```
-$ rulebook preview -a 127.0.0.1 -p 8080 src
+$ rulebook preview -f card -a 127.0.0.1 -p 8080 src
 ```
 
 ### Production
 
 ```
-$ rulebook make -o dist src
+$ rulebook make -f card -o dist src
 $ rulebook serve -a 127.0.0.1 -p 8080 dist
 $ open http://127.0.0.1:8080
 ```
@@ -50,7 +50,8 @@ The design of **Rulebook** strictly followed the following particular
 design criterias, driven by the demands in the *msg CTO Policy* project
 of Dr. Ralf S. Engelschall:
 
-- FIXME
+- policies are comprised of individual aspects
+- aspects span a layered space of possibilities
 
 Architecture
 ------------
