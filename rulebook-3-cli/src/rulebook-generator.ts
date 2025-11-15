@@ -167,7 +167,7 @@ export class RulebookGenerator {
             else if (format === "prose")
                 html += "<ul>"
 
-            const assessments = this.typedKeys(aspect.obj.Assessment).toSorted().toReversed()
+            const assessments = this.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))
                 .map((key) => aspect.obj.Assessment[key])
                 .filter((ass) => ass !== undefined)
             if (format === "card") {
@@ -201,7 +201,7 @@ export class RulebookGenerator {
                 for (let i = 0; i < assessments.length; i++)
                     types[i] = "NONE"
                 const A = this.typedKeys(aspect.obj.Assessment)
-                    .toSorted().toReversed()
+                    .toSorted((a, b) => b.localeCompare(a))
                     .map((key) => aspect.obj.Assessment[key]!)
                 for (let i = 0; i < A.length; i++) {
                     for (const type of [ "WONT", "MAY", "SHOULD", "MUST" ] as const) {
@@ -216,7 +216,7 @@ export class RulebookGenerator {
 
                 html += "<div class=\"levels\">"
                 let i = 0
-                for (const level of this.typedKeys(aspect.obj.Assessment).toSorted().toReversed()) {
+                for (const level of this.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))) {
                     const assessment = aspect.obj.Assessment[level]!
                     const type = types[i++]
                     html += `<div class="level ${type}">`
@@ -271,7 +271,7 @@ export class RulebookGenerator {
                 html += "</div>"
             }
             if (format === "prose") {
-                for (const level of this.typedKeys(aspect.obj.Assessment).toSorted().toReversed()) {
+                for (const level of this.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))) {
                     const assessment = aspect.obj.Assessment[level]!
                     const types = [ "MUST", "SHOULD", "MAY"  ] as const
                     const idx = assessment.Assess?.findIndex((a) => types.some((x) => a[x] !== undefined)) ?? -1
