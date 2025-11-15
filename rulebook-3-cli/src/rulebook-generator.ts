@@ -179,20 +179,17 @@ export class RulebookGenerator {
                             <polygon class="triangle-bottom" points="100,0 100,100 0,100"/>
                         </svg>
                     </div>`
-                    const label1 = assessments
+                    const optimizeLabels = assessments
                         .filter((ass) => ass.Optimize !== undefined)
                         .map((ass) => ass.Optimize!)
-                        .find((_, i) => i === 0)
-                    if (label1 === undefined)
+                    const optimizeTop = optimizeLabels.find((_, i) => i === 0)
+                    if (optimizeTop === undefined)
                         throw new Error(`first/top Optimize information missing in assessment of aspect ${aspect.obj.Id}`)
-                    const label2 = assessments
-                        .filter((ass) => ass.Optimize !== undefined)
-                        .map((ass) => ass.Optimize!)
-                        .find((_, i) => i === 1) ?? "??"
-                    if (label2 === undefined)
-                        throw new Error(`second/buttom Optimize information missing in assessment of aspect ${aspect.obj.Id}`)
-                    html += `<div class="optimize-top">${label1}</div>`
-                    html += `<div class="optimize-bottom">${label2}</div>`
+                    const optimizeBottom = optimizeLabels.find((_, i) => i === 1) ?? "??"
+                    if (optimizeBottom === undefined)
+                        throw new Error(`second/bottom Optimize information missing in assessment of aspect ${aspect.obj.Id}`)
+                    html += `<div class="optimize-top">${optimizeTop}</div>`
+                    html += `<div class="optimize-bottom">${optimizeBottom}</div>`
                 }
                 else
                     html += "<div class=\"bg empty\"></div>"
