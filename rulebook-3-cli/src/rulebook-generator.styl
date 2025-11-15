@@ -1,0 +1,330 @@
+
+@import "./node_modules/typopro-web/web/TypoPRO-SourceSansPro/TypoPRO-SourceSansPro.css"
+@import "./node_modules/typopro-web/web/TypoPRO-SourceCodePro/TypoPRO-SourceCodePro.css"
+
+:root
+    --color-std-bg-0: #000000
+    --color-std-bg-1: #1a1a1a
+    --color-std-bg-2: #242424
+    --color-std-bg-3: #2e2e2e
+    --color-std-bg-4: #383838
+    --color-std-bg-5: #424242
+
+    --color-std-fg-0: #606060
+    --color-std-fg-1: #808080
+    --color-std-fg-2: #a0a0a0
+    --color-std-fg-3: #c0c0c0
+    --color-std-fg-4: #e0e0e0
+    --color-std-fg-5: #ffffff
+
+    --color-acc-bg-0: #003366
+    --color-acc-bg-1: #114477
+    --color-acc-bg-2: #225588
+    --color-acc-bg-3: #336699
+    --color-acc-bg-4: #4477aa
+    --color-acc-bg-5: #5588bb
+
+    --color-acc-fg-0: #6090c0
+    --color-acc-fg-1: #80b0e0
+    --color-acc-fg-2: #88b8e8
+    --color-acc-fg-3: #90c0f0
+    --color-acc-fg-4: #98c8f8
+    --color-acc-fg-5: #a0d0ff
+
+    --color-sig-bg-0: #803800
+    --color-sig-bg-1: #904800
+    --color-sig-bg-2: #a05810
+    --color-sig-bg-3: #b06820
+    --color-sig-bg-4: #c07830
+    --color-sig-bg-5: #d08840
+
+    --color-sig-fg-0: #c8b090
+    --color-sig-fg-1: #e8d0b0
+    --color-sig-fg-2: #f0d8b8
+    --color-sig-fg-3: #f8e0c0
+    --color-sig-fg-4: #ffe8c8
+    --color-sig-fg-5: #fff0d0
+
+    --color-std-bg:   #000000
+    --color-std-fg:   #ffffff
+    --color-prt-bg:   #999999
+    --color-prt-fg:   #ffffff
+    --color-sig-bg:   #b06820
+    --color-sig-fg:   #efd0a0
+    --color-acc-bg:   #336699
+    --color-acc-fg:   #a0d0ff
+
+    --font-family:    "TypoPRO Source Sans Pro", sans-serif
+
+html,
+body
+    margin: 0
+    padding: 0
+    font-size: 1.40vw
+
+body
+    // background-color: var(--color-std-bg-3)
+    // color:            var(--color-std-fg-3)
+    font-family:      var(--font-family)
+    font-weight:      normal
+    font-size:        12pt
+    line-height:      125%
+    position:         relative
+    padding: 5vw
+
+.cover
+    .title
+        font-size: 180%
+        font-weight: bold
+        padding: 1rem 0 1rem 0
+    .description
+        margin-top: 0.5rem
+    .version
+        margin-top: 0.5rem
+    .editing
+        margin-top: 0.5rem
+
+.context
+    .title
+        font-size: 140%
+        font-weight: bold
+        padding: 2rem 0 0.5rem 0
+
+.aspect.aspect-card
+    margin-top: 2rem
+    .title
+        font-size: 160%
+        font-weight: bold
+        background-color: #666666
+        color: #ffffff
+        padding: 0.5rem 0.5rem 0.5rem 0.5rem
+        border-radius: 0.25rem
+    .subtitle
+        margin-top: 1.0rem
+        margin-bottom: 0.5rem
+        font-weight: 200
+        width: calc(100% - 1.0rem)
+        background-color: #f0f0f0
+        color: #666666
+        padding: 0.10rem 0.5rem 0.10rem 0.5rem
+        border-radius: 0.25rem
+    .header
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        align-items: stretch
+        gap: 0.5rem
+        .header-left
+            flex-grow: 1
+        .header-right-1
+            width: 20%
+        .header-right-2
+            width: 20%
+        .header-right-1,
+        .header-right-2
+            display: flex
+            flex-direction: column
+            justify-content: flex-start
+            align-items: stretch
+            .row
+                display: flex
+                flex-direction: row
+                justify-content: flex-start
+                align-items: stretch
+                .label
+                    font-weight: 200
+                    width: 6rem
+                    min-width: 6rem
+                    max-width: 6rem
+                .date
+                    flex-grow: 1
+    .objective
+        margin-top: 0.5rem
+        font-size: 120%
+        line-height: 1.2
+
+.aspect.aspect-prose
+    .id
+        font-weight: bold
+    .name
+        font-weight: bold
+    .assess
+        font-weight: 600
+    .what
+        font-weight: 600
+    .quote
+        color: #999999
+    .sota
+        font-weight: 200
+    ul li
+        margin-top: 0.5rem
+    ul li:last-child
+        margin-bottom: 0.5rem
+
+.assessment
+    margin-top: 1vw
+    margin-bottom: 1vw
+    display: flex
+    flex-direction: row
+    justify-content: flex-start
+    align-items: stretch
+    gap: 1.0rem
+    .space
+        width: 10vw
+        min-width: 10vw
+        max-width: 10vw
+        position: relative
+        border-radius: 0.25rem
+        overflow: hidden
+        .bg
+            width: 100%
+            height: 100%
+            position: absolute
+            top: 0
+            left: 0
+            svg
+                width: 100%
+                height: 100%
+                .triangle-top
+                    fill: #999999
+                .triangle-bottom
+                    fill: #e0e0e0
+            &.empty
+                background-color: #999999
+        .optimize-top
+            color: #ffffff
+            position: absolute
+            width: 15rem
+            top: calc(15rem + 0.5rem)
+            left: 0.5rem
+            transform: rotate(-90deg)
+            transform-origin: left top
+            white-space: nowrap
+            text-align: right
+        .optimize-bottom
+            color: #000000
+            position: absolute
+            width: 15rem
+            bottom: calc(15rem + 0.5rem)
+            right: 0.5rem
+            transform: rotate(-90deg)
+            transform-origin: right bottom
+            white-space: nowrap
+    .levels
+        flex-grow: 1
+        display: flex
+        flex-direction: column
+        justify-content: flex-start
+        align-items: stretch
+        gap: 0.2rem
+        .level
+            border-top: 1px solid #cccccc
+            border-top-left-radius: 0.25rem
+            border-bottom-left-radius: 0.25rem
+            overflow: hidden
+            flex-grow: 1
+            display: flex
+            flex-direction: row
+            justify-content: flex-start
+            align-items: stretch
+            gap: 0.5rem
+            .color
+                width: 2vw
+                min-width: 2vw
+                max-width: 2vw
+                background-color: #999999
+                height: 100%
+            .name
+                width: 15vw
+                min-width: 15vw
+                max-width: 15vw
+                font-weight: bold
+            .info
+                flex-grow: 1
+                display: flex
+                flex-direction: column
+                justify-content: flex-start
+                align-items: stretch
+                gap: 0
+                .row
+                    display: flex
+                    flex-direction: row
+                    justify-content: flex-start
+                    align-items: stretch
+                    .label
+                        width: 6vw
+                        min-width: 6vw
+                        max-width: 6vw
+                        font-weight: 200
+                        color: #666666
+                    .value
+                        flex-grow: 1
+            &.WONT
+                .color
+                    background-color: #cc3333
+                .name
+                    color: #cc3333
+            &.MAY
+                .color
+                    background-color: #6699cc
+                .name
+                    color: #6699cc
+            &.SHOULD
+                .color
+                    background-color: #336699
+                .name
+                    color: #336699
+            &.MUST
+                .color
+                    background-color: #669933
+                .name
+                    color: #669933
+            &.NONE
+                .color
+                    background-color: #999999
+                .name
+                    color: #999999
+
+.relations
+    margin-top: 0.5rem
+    display: flex
+    flex-direction: row
+    .column
+        display: flex
+        flex-direction: column
+        width: 50%
+        &:first-child
+            width: calc(50% - 2rem)
+            padding-right: 1rem
+            border-right: 1px solid #cccccc
+            margin-right: 1rem
+        .row
+            display: flex
+            flex-direction: row
+            .type
+                width: 6rem
+                min-width: 6rem
+                max-width: 6rem
+                font-weight: 200
+            .refs
+                flex-grow: 1
+
+span.assess
+    font-weight: bold
+
+.rarr
+    display: inline-block
+    padding-left: 0.15rem
+    padding-right: 0.15rem
+    font-size: 75%
+
+code, tt
+    font-family: "TypoPRO Source Code Pro", monospace
+    font-size: 95%
+
+a
+    text-decoration: none
+a[href],
+a:hover[href],
+a:visited[href]
+    color: var(--color-acc-bg-3)

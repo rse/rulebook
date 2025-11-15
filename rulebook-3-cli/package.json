@@ -45,18 +45,28 @@
         "check-dependencies":           "2.0.0",
 
         "@types/node":                  "24.10.1",
-        "@types/yargs":                 "17.0.34",
+        "@types/yargs":                 "17.0.35",
         "@types/ws":                    "8.18.1",
         "@types/tmp":                   "0.2.6",
         "@types/yauzl":                 "2.10.3",
         "@types/mime-types":            "3.0.1",
-        "@types/object-hash":           "3.0.6"
+        "@types/object-hash":           "3.0.6",
+        "@types/object-path":           "0.11.4",
+        "@types/stylus":                "0.48.43"
     },
     "dependencies": {
         "syspath":                      "1.0.8",
         "cli-io":                       "0.9.13",
         "yargs":                        "18.0.0",
         "chalk":                        "5.6.2",
+        "arktype":                      "2.1.26",
+        "yaml":                         "2.8.1",
+        "typescript":                   "5.9.3",
+        "source-code-error":            "1.2.0",
+        "object-path":                  "0.11.8",
+        "stylus":                       "0.64.0",
+        "marked":                       "17.0.0",
+        "marked-smartypants":           "1.1.11",
 
         "rulebook-2-app":               "file:../rulebook-2-app"
     },
