@@ -201,7 +201,7 @@ const cmdPreview = async (
                     cli!.log("error", err.message)
                 else
                     cli!.log("error", String(err))
-                process.exit(0)
+                process.exit(1)
             })
         })
         .command("serve <dir>", "serve rulebook rendering", (yargs) => {
