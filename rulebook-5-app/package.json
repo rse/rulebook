@@ -5,7 +5,7 @@
     "keywords":                             [ "policy", "rule", "rendering", "app" ],
     "homepage":                             "https://github.com/rse/rulebook",
     "repository":                           { "url": "git+https://github.com/rse/rulebook.git", "type": "git" },
-    "bugs":                                 { "url": "http://github.com/rse/rulebook/issues" },
+    "bugs":                                 { "url": "https://github.com/rse/rulebook/issues" },
     "version":                              "0.0.0",
     "license":                              "GPL-3.0-only",
     "author": {

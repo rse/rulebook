@@ -3,9 +3,9 @@
     "name":                             "rulebook-4-cli",
     "description":                      "Policy Rule Rendering Application",
     "keywords":                         [ "policy", "rule", "rendering", "app" ],
-    "homepage":                         "http://github.com/rse/rulebook",
+    "homepage":                         "https://github.com/rse/rulebook",
     "repository":                       { "url": "git+https://github.com/rse/rulebook.git", "type": "git" },
-    "bugs":                             { "url": "http://github.com/rse/rulebook/issues" },
+    "bugs":                             { "url": "https://github.com/rse/rulebook/issues" },
     "version":                          "0.0.0",
     "license":                          "GPL-3.0-only",
     "bin":                              { "rulebook": "rulebook.js" },
@@ -60,6 +60,7 @@
         "cli-io":                       "0.9.13",
         "yargs":                        "18.0.0",
         "chalk":                        "5.6.2",
+        "axios":                        "1.13.2",
 
         "rulebook-3-lib":               "file:../rulebook-3-lib"
     },

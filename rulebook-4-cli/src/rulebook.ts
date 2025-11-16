@@ -15,6 +15,7 @@ import yargs             from "yargs"
 import { hideBin }       from "yargs/helpers"
 import chalk             from "chalk"
 import { glob }          from "glob"
+import axios             from "axios"
 
 /*  internal dependencies  */
 // @ts-ignore
@@ -144,6 +145,24 @@ const cmdPreview = async (
             logTime:   false,
             logPrefix: "rulebook"
         })
+    }
+
+    /*  once perform a version check  */
+    const pkg = JSON.parse(pkgJSON)
+    const response = await axios({
+        method: "GET",
+        url:    "https://api.github.com/repos/rse/rundown/tagsx"
+    }).then((response) => response.data).catch(() => [])
+    if (typeof response === "object"
+        && response !== null
+        && response instanceof Array
+        && response.length > 0) {
+        const tag = response[0].name
+        if (tag !== pkg.version) {
+            const url = `https://github.com/rse/rundown/releases/tag/${tag}`
+            process.stderr.write(`rulebook: ${chalk.red("WARNING")}: You are using Rulebook version ${chalk.red(pkg.version)}, but newer version ${chalk.blue(tag)} is available\n`)
+            process.stderr.write(`rulebook: ${chalk.blue("NOTICE")}: Get this latest version from ${chalk.blue(url)}\n`)
+        }
     }
 
     /*  parse command-line arguments  */
