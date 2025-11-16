@@ -13,8 +13,12 @@
 @import "../node_modules/typopro-web/web/TypoPRO-SourceSansPro/TypoPRO-SourceSansPro-Bold.css"
 @import "../node_modules/typopro-web/web/TypoPRO-SourceSansPro/TypoPRO-SourceSansPro-BoldIt.css"
 
+@import "../node_modules/typopro-web/web/TypoPRO-SourceCodePro/TypoPRO-SourceCodePro-Regular.css"
+@import "../node_modules/typopro-web/web/TypoPRO-SourceCodePro/TypoPRO-SourceCodePro-It.css"
 @import "../node_modules/typopro-web/web/TypoPRO-SourceCodePro/TypoPRO-SourceCodePro-Light.css"
 @import "../node_modules/typopro-web/web/TypoPRO-SourceCodePro/TypoPRO-SourceCodePro-LightIt.css"
+@import "../node_modules/typopro-web/web/TypoPRO-SourceCodePro/TypoPRO-SourceCodePro-Bold.css"
+@import "../node_modules/typopro-web/web/TypoPRO-SourceCodePro/TypoPRO-SourceCodePro-BoldIt.css"
 
 :root
     --color-std-bg-0: #000000
@@ -77,8 +81,6 @@ body
     font-size: 1.40vw
 
 body
-    // background-color: var(--color-std-bg-3)
-    // color:            var(--color-std-fg-3)
     font-family:      var(--font-family)
     font-weight:      normal
     font-size:        12pt
@@ -158,10 +160,15 @@ body
         line-height: 1.2
 
 .aspect.aspect-prose
-    .id
-        font-weight: bold
-    .name
-        font-weight: bold
+    .title
+        .id
+            color: var(--color-std-fg-1)
+        .name
+            color: var(--color-std-bg-2)
+            font-weight: bold
+    ul
+        .id
+            color: var(--color-std-fg-1)
     .assess
         font-weight: 600
     .what
