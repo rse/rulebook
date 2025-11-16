@@ -160,7 +160,8 @@ const cmdPreview = async (
         const tag = response[0].name
         if (tag !== pkg.version) {
             const url = `https://github.com/rse/rundown/releases/tag/${tag}`
-            process.stderr.write(`rulebook: ${chalk.red("WARNING")}: You are using Rulebook version ${chalk.red(pkg.version)}, but newer version ${chalk.blue(tag)} is available\n`)
+            process.stderr.write(`rulebook: ${chalk.red("WARNING")}: You are using Rulebook version ${chalk.red(pkg.version)}, ` +
+                `but newer version ${chalk.blue(tag)} is available\n`)
             process.stderr.write(`rulebook: ${chalk.blue("NOTICE")}: Get this latest version from ${chalk.blue(url)}\n`)
         }
     }
