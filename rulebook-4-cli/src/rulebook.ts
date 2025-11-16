@@ -18,9 +18,8 @@ import { glob }          from "glob"
 
 /*  internal dependencies  */
 // @ts-ignore
-import pkgJSON                from "../../package.json?raw" with { type: "json" }
-import { RulebookRepository } from "./rulebook-repository"
-import { RulebookParseError } from "./rulebook-parser"
+import pkgJSON from "../../package.json?raw" with { type: "json" }
+import { Rulebook, RulebookParseError } from "../../rulebook-3-lib"
 
 /*  central CLI context  */
 let cli: CLIio | null = null
@@ -28,7 +27,7 @@ let cli: CLIio | null = null
 /*  parse rulebook  */
 const parseRulebook = async (cli: CLIio, dir: string) => {
     /*  create rulebook repository  */
-    const rulebook = new RulebookRepository()
+    const rulebook = new Rulebook()
 
     /*  sanity check source directory  */
     cli.log("info", `loading rulebook source "${dir}"`)
@@ -85,7 +84,7 @@ const parseRulebook = async (cli: CLIio, dir: string) => {
 }
 
 /*  format rulebook  */
-const formatRulebook = async (cli: CLIio, rulebook: RulebookRepository, format: string) => {
+const formatRulebook = async (cli: CLIio, rulebook: Rulebook, format: string) => {
     cli.log("info", `formatting rulebook into format "${format}"`)
     const output = await rulebook.print(format)
     return output

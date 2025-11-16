@@ -1,6 +1,6 @@
 {
     "private":                              "true",
-    "name":                                 "rulebook-2-app",
+    "name":                                 "rulebook-5-app",
     "description":                          "Policy Rule Rendering Application",
     "keywords":                             [ "policy", "rule", "rendering", "app" ],
     "homepage":                             "https://github.com/rse/rulebook",

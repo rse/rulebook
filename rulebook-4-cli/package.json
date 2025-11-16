@@ -1,6 +1,6 @@
 {
     "private":                          true,
-    "name":                             "rulebook-3-cli",
+    "name":                             "rulebook-4-cli",
     "description":                      "Policy Rule Rendering Application",
     "keywords":                         [ "policy", "rule", "rendering", "app" ],
     "homepage":                         "http://github.com/rse/rulebook",
@@ -31,7 +31,7 @@
         "@liuli-util/vite-plugin-node": "0.10.0",
         "@wroud/vite-plugin-tsc":       "0.12.2",
         "rollup-plugin-node-externals": "8.1.2",
-        "typescript":                   "5.8.3",
+        "typescript":                   "5.9.3",
         "@vercel/ncc":                  "0.38.4",
         "remark-cli":                   "12.0.1",
         "remark":                       "15.0.1",
@@ -60,23 +60,13 @@
         "cli-io":                       "0.9.13",
         "yargs":                        "18.0.0",
         "chalk":                        "5.6.2",
-        "arktype":                      "2.1.26",
-        "yaml":                         "2.8.1",
-        "typescript":                   "5.9.3",
-        "source-code-error":            "1.2.0",
-        "object-path":                  "0.11.8",
-        "stylus":                       "0.64.0",
-        "marked":                       "17.0.0",
-        "marked-smartypants":           "1.1.11",
 
-        "rulebook-2-app":               "file:../rulebook-2-app"
+        "rulebook-3-lib":               "file:../rulebook-3-lib"
     },
     "overrides" : {
         "@liuli-util/vite-plugin-node": { "vite": ">=6.0.0" }
     },
-    "upd": [
-        "!typescript"
-    ],
+    "upd": [],
     "engines" : {
         "npm":                          ">=10.0.0",
         "node":                         ">=22.0.0"

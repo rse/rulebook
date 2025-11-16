@@ -22,7 +22,7 @@ export default Vite.defineConfig(({ command, mode }) => ({
         }),
         nodeExternals({
             builtins: true,
-            deps:     true,
+            deps:     false,
             devDeps:  false,
             optDeps:  false,
             peerDeps: false
@@ -31,6 +31,9 @@ export default Vite.defineConfig(({ command, mode }) => ({
     resolve: {
         mainFields: [ "module", "jsnext:main", "jsnext" ],
         conditions: [ "node" ],
+        alias: {
+            electron: "/dev/null"
+        }
     },
     build: {
         lib: {
@@ -49,6 +52,7 @@ export default Vite.defineConfig(({ command, mode }) => ({
         minify:                 (mode === "production"),
         reportCompressedSize:   false,
         rollupOptions: {
+            // external: [ "electron" ],
             onwarn (warning, warn) {
                 if (warning.message.match(/Use of eval.*?is strongly discouraged/))
                     return
