@@ -10,9 +10,8 @@ Rulebook
 [![github (author followers)](https://img.shields.io/github/followers/rse?label=author%20followers&logo=github&color=%234477aa)](https://github.com/rse)
 
 > [!CAUTION]
-> **CAVEAT EMPTOR:
-> THIS APPLICATION IS CURRENTLY UNDER ACTIVE DEVELOPMENT!
-> PLEASE STILL DO NOT EXPECT ANYTHING.**
+> **CAVEAT EMPTOR: THIS APPLICATION IS CURRENTLY UNDER ACTIVE DEVELOPMENT!<br/>
+> PLEASE STILL DO NOT EXPECT ANYTHING, NOT EVEN ANY WORKING FUNCTIONALITY.**
 
 Abstract
 --------
