@@ -6,7 +6,7 @@
     "homepage":         "https://github.com/rse/rulebook",
     "repository":       { "url": "git+https://github.com/rse/rulebook.git", "type": "git" },
     "bugs":             { "url": "https://github.com/rse/rulebook/issues" },
-    "version":          "0.8.0",
+    "version":          "0.8.1",
     "license":          "GPL-3.0-only",
     "author": {
         "name":         "Dr. Ralf S. Engelschall",
