@@ -1,0 +1,57 @@
+{
+    "private":                                   true,
+    "name":                                      "rulebook-2-rnd",
+    "description":                               "Policy Rule Rendering Application",
+    "keywords":                                  [ "policy", "rule", "rendering", "app" ],
+    "homepage":                                  "http://github.com/rse/rulebook",
+    "repository":                                { "url": "git+https://github.com/rse/rulebook.git", "type": "git" },
+    "bugs":                                      { "url": "http://github.com/rse/rulebook/issues" },
+    "version":                                   "0.0.0",
+    "license":                                   "GPL-3.0-only",
+    "author": {
+        "name":                                  "Dr. Ralf S. Engelschall",
+        "email":                                 "rse@engelschall.com",
+        "url":                                   "http://engelschall.com"
+    },
+    "devDependencies": {
+        "eslint":                                "9.39.1",
+        "@eslint/js":                            "9.39.1",
+        "eslint-plugin-n":                       "17.23.1",
+        "eslint-plugin-promise":                 "7.2.1",
+        "eslint-plugin-import":                  "2.32.0",
+        "neostandard":                           "0.12.2",
+        "globals":                               "16.5.0",
+        "shx":                                   "0.4.0",
+        "mkdirp":                                "3.0.1",
+        "vite":                                  "7.2.2",
+        "vite-plugin-static-copy":               "3.1.4",
+        "vite-plugin-singlefile":                "2.3.0",
+        "vite-plugin-node-polyfills":            "0.24.0",
+        "@m5nv/vite-plugin-run-task":            "1.0.2",
+        "@wroud/vite-plugin-tsc":                "0.12.2",
+        "stylus":                                "0.64.0",
+        "inline-assets":                         "1.5.1",
+        "typescript":                            "5.9.3",
+        "@rse/stx":                              "1.1.2",
+        "typopro-web":                           "4.2.7",
+        "csso":                                  "5.0.5",
+        "svgo":                                  "4.0.0",
+        "@types/node":                           "24.10.1",
+        "@types/csso":                           "5.0.4",
+        "@types/luxon":                          "3.7.1",
+        "@types/dom-speech-recognition":         "0.0.7",
+        "nodemon":                               "3.1.11",
+        "check-dependencies":                    "2.0.0"
+    },
+    "dependencies": {
+    },
+    "overrides": {
+    },
+    "engines" : {
+        "npm":                                   ">=10.0.0",
+        "node":                                  ">=22.0.0"
+    },
+    "scripts": {
+        "start":                                 "stx -v4 -c etc/stx.conf"
+    }
+}

@@ -1,0 +1,73 @@
+{
+    "private":                           true,
+    "name":                              "rulebook-3-lib",
+    "description":                       "Policy Rule Rendering Application",
+    "keywords":                          [ "policy", "rule", "rendering", "app" ],
+    "homepage":                          "http://github.com/rse/rulebook",
+    "repository":                        { "url": "git+https://github.com/rse/rulebook.git", "type": "git" },
+    "bugs":                              { "url": "http://github.com/rse/rulebook/issues" },
+    "version":                           "0.0.0",
+    "license":                           "GPL-3.0-only",
+    "author": {                         
+        "name":                          "Dr. Ralf S. Engelschall",
+        "email":                         "rse@engelschall.com",
+        "url":                           "http://engelschall.com"
+    },
+    "types":                             "./dst-stage1/rulebook.d.ts",
+    "module":                            "./dst-stage2/rulebook.esm.js",
+    "main":                              "./dst-stage2/rulebook.cjs.js",
+    "browser":                           "./dst-stage2/rulebook.umd.js",
+    "exports": {
+        ".": {
+            "import":                    { "types": "./dst-stage1/rulebook.d.ts", "default": "./dst-stage2/rulebook.esm.js" },
+            "require":                   { "types": "./dst-stage1/rulebook.d.ts", "default": "./dst-stage2/rulebook.cjs.js" }
+        }
+    },
+    "devDependencies": {
+        "eslint":                        "9.39.1",
+        "@eslint/js":                    "9.39.1",
+        "eslint-plugin-n":               "17.23.1",
+        "eslint-plugin-promise":         "7.2.1",
+        "eslint-plugin-import":          "2.32.0",
+        "neostandard":                   "0.12.2",
+        "globals":                       "16.5.0",
+        "npm-run-all":                   "4.1.5",
+        "shx":                           "0.4.0",
+        "mkdirp":                        "3.0.1",
+        "vite":                          "7.2.2",
+        "vite-plugin-static-copy":       "3.1.4",
+        "vite-plugin-singlefile":        "2.3.0",
+        "vite-plugin-node-polyfills":    "0.24.0",
+        "@m5nv/vite-plugin-run-task":    "1.0.2",
+        "@wroud/vite-plugin-tsc":        "0.12.2",
+        "typescript":                    "5.9.3",
+        "@rse/stx":                      "1.1.2",
+        "nodemon":                       "3.1.11",
+        "cross-env":                     "10.1.0",
+        "check-dependencies":            "2.0.0",
+
+        "@types/node":                   "24.10.1",
+        "@types/object-path":            "0.11.4",
+
+        "rulebook-2-rnd":                "file:../rulebook-2-rnd"
+    },                                  
+    "dependencies": {                   
+        "eventemitter2":                 "6.4.9",
+        "arktype":                       "2.1.26",
+        "yaml":                          "2.8.1",
+        "typescript":                    "5.9.3",
+        "source-code-error":             "1.2.0",
+        "object-path":                   "0.11.8",
+        "stylus":                        "0.64.0",
+        "marked":                        "17.0.0",
+        "marked-smartypants":            "1.1.11",
+        "inline-assets":                 "1.5.1"
+    },
+    "engines" : {
+        "npm":                           ">=10.0.0",
+        "node":                          ">=22.0.0"
+    },
+    "scripts": {
+        "start":                         "stx -v4 -c etc/stx.conf"
+    }
+}

@@ -57,10 +57,12 @@ Architecture
 ------------
 
 - [rulebook-1-art](./rulebook-1-art): artwork
-- [rulebook-2-app](./rulebook-2-app): web application
-- [rulebook-3-cli](./rulebook-3-cli): command-line interface
-- [rulebook-4-dst](./rulebook-4-dst): distribution
-- [rulebook-5-smp](./rulebook-5-smp): sample
+- [rulebook-2-rnd](./rulebook-2-rnd): rendering template
+- [rulebook-3-lib](./rulebook-3-lib): rendering library
+- [rulebook-4-cli](./rulebook-4-cli): command-line interface
+- [rulebook-5-app](./rulebook-5-app): web application
+- [rulebook-6-dst](./rulebook-6-dst): distribution
+- [rulebook-7-smp](./rulebook-7-smp): sample
 
 License
 -------
