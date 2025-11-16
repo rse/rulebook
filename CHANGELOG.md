@@ -2,8 +2,8 @@
 ChangeLog
 =========
 
-0.9.0 (2025-09-xx)
+0.8.0 (2025-11-16)
 ------------------
 
-(first stable release)
+(first alpha version)
 
