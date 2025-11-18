@@ -319,7 +319,6 @@ export class RulebookGenerator {
                             })
                         }
                     }
-
                 })
 
                 if (format === "card") {
