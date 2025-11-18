@@ -53,7 +53,7 @@
     },                                  
     "dependencies": {                   
         "eventemitter2":                 "6.4.9",
-        "arktype":                       "2.1.26",
+        "arktype":                       "2.1.27",
         "yaml":                          "2.8.1",
         "typescript":                    "5.9.3",
         "source-code-error":             "1.2.0",
