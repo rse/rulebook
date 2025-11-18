@@ -7,6 +7,7 @@ ChangeLog
 
 - CLEANUP: use Generator utility class for generating correctly nested HTML markup
 - BUGFIX: various bugfixes in HTML generator
+- UPGRADE: upgrade NPM dependencies
 
 0.8.1 (2025-11-16)
 ------------------
