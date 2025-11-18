@@ -2,7 +2,7 @@
 ChangeLog
 =========
 
-0.8.2 (2025-11-16)
+0.8.2 (2025-11-18)
 ------------------
 
 - CLEANUP: use Generator utility class for generating correctly nested HTML markup
