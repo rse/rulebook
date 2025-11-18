@@ -2,6 +2,12 @@
 ChangeLog
 =========
 
+0.8.2 (2025-11-16)
+------------------
+
+- CLEANUP: use Generator utility class for generating correctly nested HTML markup
+- BUGFIX: various bugfixes in HTML generator
+
 0.8.1 (2025-11-16)
 ------------------
 
