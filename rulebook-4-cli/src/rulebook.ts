@@ -66,7 +66,7 @@ const parseRulebook = async (cli: CLIio, dir: string) => {
         cli.log("info", `loading rulebook aspect "${aspectFile}"`)
         const aspectYAML = await fs.promises.readFile(aspectFile, "utf8")
         try {
-             rulebook.parseAspect(aspectFile, aspectYAML)
+            rulebook.parseAspect(aspectFile, aspectYAML)
         }
         catch (err: any) {
             if (err instanceof RulebookParseError)
