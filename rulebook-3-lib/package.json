@@ -34,7 +34,7 @@
         "npm-run-all":                   "4.1.5",
         "shx":                           "0.4.0",
         "mkdirp":                        "3.0.1",
-        "vite":                          "7.2.2",
+        "vite":                          "7.2.4",
         "vite-plugin-static-copy":       "3.1.4",
         "vite-plugin-singlefile":        "2.3.0",
         "vite-plugin-node-polyfills":    "0.24.0",
@@ -59,7 +59,7 @@
         "source-code-error":             "1.2.0",
         "object-path":                   "0.11.8",
         "stylus":                        "0.64.0",
-        "marked":                        "17.0.0",
+        "marked":                        "17.0.1",
         "marked-smartypants":            "1.1.11",
         "inline-assets":                 "1.5.1"
     },
