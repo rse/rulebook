@@ -108,6 +108,7 @@ export class RulebookGenerator {
                 html.add(`<div class="from"><div class="label">From:</div><div class="date">${index.obj.Validity.From}</div></div>`)
                 html.add(`<div class="until"><div class="label">Until:</div><div class="date">${index.obj.Validity.Until}</div></div>`)
             })
+            /*
             html.group("<div class=\"context\">", "</div>", (html) => {
                 html.add("<div class=\"title\">Context References</div>")
                 html.group("<dl>", "</dl>", (html) => {
@@ -121,6 +122,7 @@ export class RulebookGenerator {
                     }
                 })
             })
+            */
         })
 
         /*  generate individual aspects  */
