@@ -88,35 +88,39 @@ export class RulebookGenerator {
 
         /*  generate prolog from index  */
         html.group("<div class=\"cover\">", "</div>", (html) => {
+            if (index.obj.Logo !== undefined) {
+                html.group("<div class=\"logo\">", "</div>", (html) => {
+                    html.add(`<div class="light">${index.obj.Logo!.Light}</div>`)
+                    html.add(`<div class="dark">${index.obj.Logo!.Dark}</div>`)
+                })
+            }
             html.add(`<div class="title">${index.obj.Name}</div>`)
             const description = this.md2html(index.obj.Description)
             html.add(`<div class="description">${description}</div>`)
             html.add(`<div class="version">Version: ${index.obj.Version}</div>`)
-            /*
             html.group("<div class=\"editing\">", "</div>", (html) => {
                 html.add("<div class=\"label\">Editing:</div>")
                 html.add(`<div class="created"><div class="label">Created:</div><div class="date">${index.obj.Editing.Created}</div></div>`)
                 html.add(`<div class="modified"><div class="label">Modified:</div><div class="date">${index.obj.Editing.Modified}</div></div>`)
             })
-            html.group("<div class=\"validity\">, "</div>", (html) => {
+            html.group("<div class=\"validity\">", "</div>", (html) => {
                 html.add("<div class=\"label\">Validity:</div>")
                 html.add(`<div class="from"><div class="label">From:</div><div class="date">${index.obj.Validity.From}</div></div>`)
                 html.add(`<div class="until"><div class="label">Until:</div><div class="date">${index.obj.Validity.Until}</div></div>`)
             })
-            html += "<div class=\"context\">"
-            html += "<div class=\"title\">Context References</div>"
-            html += "<dl>"
-            for (const key1 of this.typedKeys(index.obj.Context)) {
-                const ns = index.obj.Context[key1]
-                for (const key2 of this.typedKeys(ns)) {
-                    const value = ns[key2]
-                    html += `<dt><a name="ctx-${key1}-${key2}">${key1}<span class="rarr">&#x25B6;</span><strong>${key2}</strong></a></dt>
-                        <dd>${value}</dd>`
-                }
-            }
-            html += "</dl>"
-            html += "</div>"
-            */
+            html.group("<div class=\"context\">", "</div>", (html) => {
+                html.add("<div class=\"title\">Context References</div>")
+                html.group("<dl>", "</dl>", (html) => {
+                    for (const key1 of this.typedKeys(index.obj.Context)) {
+                        const ns = index.obj.Context[key1]
+                        for (const key2 of this.typedKeys(ns)) {
+                            const value = ns[key2]
+                            html.add(`<dt><a name="ctx-${key1}-${key2}">${key1}<span class="rarr">&#x25B6;</span><strong>${key2}</strong></a></dt>
+                                <dd>${value}</dd>`)
+                        }
+                    }
+                })
+            })
         })
 
         /*  generate individual aspects  */
