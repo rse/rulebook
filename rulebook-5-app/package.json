@@ -19,7 +19,9 @@
         "@fortawesome/fontawesome-free":    "7.1.0",
         "axios":                            "1.13.2",
         "moment":                           "2.30.1",
-        "patch-package":                    "8.0.1"
+        "patch-package":                    "8.0.1",
+
+        "@rse/stx":                         "1.1.2"
     },
     "devDependencies": {
         "vite":                             "7.2.4",

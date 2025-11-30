@@ -23,6 +23,9 @@
         "shx":                "0.4.0",
         "check-dependencies": "2.0.0"
     },
+    "dependencies": {
+        "@rse/stx":           "1.1.2"
+    },
     "engines" : {
         "npm":          ">=10.0.0",
         "node":         ">=22.0.0"
