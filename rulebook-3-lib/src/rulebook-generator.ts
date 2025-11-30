@@ -220,7 +220,7 @@ export class RulebookGenerator {
             for (const aspect of aspects) {
                 if (aspect.obj.Objective === undefined)
                     throw new Error("print format \"card\" requires aspect Objective")
-                html.group(`<div class="aspect aspect-card">`, "</div>", (html) => {
+                html.group("<div class=\"aspect aspect-card\">", "</div>", (html) => {
                     html.add(`<div class="title"><a name="${aspect.obj.Id}">${aspect.obj.Id}: ${aspect.obj.Name}</a></div>`)
                     html.group("<div class=\"header\">", "</div>", (html) => {
                         html.group("<div class=\"header-left\">", "</div>", (html) => {
@@ -388,7 +388,7 @@ export class RulebookGenerator {
                     if (aspect.obj.Objective === undefined)
                         throw new Error("print format \"prose\" requires aspect Objective")
                     html.group("<li>", "</li>", (html) => {
-                        html.group(`<div class="aspect aspect-prose">`, "</div>", (html) => {
+                        html.group("<div class=\"aspect aspect-prose\">", "</div>", (html) => {
                             html.group(`<a name="${aspect.obj.Id}">`, "</a>", (html) => {
                                 html.group("<span class=\"title\">", "</span>", (html) => {
                                     html.add(`<span class="id">${aspect.obj.Id}</span>: `)
@@ -462,7 +462,7 @@ export class RulebookGenerator {
                     const level = this.typedKeys(aspect.obj.Assessment)[0]
                     const assessment = aspect.obj.Assessment[level]!
                     html.group("<li>", "</li>", (html) => {
-                        html.group(`<span class="aspect aspect-simple">`, "</span>", (html) => {
+                        html.group("<span class=\"aspect aspect-simple\">", "</span>", (html) => {
                             html.add(`<span class="id">${this.md2html(aspect.obj.Id)}</span>: `)
                             html.add(`<span class="name">${this.md2html(aspect.obj.Name)}</span>`)
                             html.group("<div class=\"demand\">", "</div>", (html) => {
