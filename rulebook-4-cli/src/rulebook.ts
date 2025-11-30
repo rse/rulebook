@@ -211,7 +211,7 @@ const cmdPreview = async (
                 })
         }, async (argv: any) => {
             setupCLI(argv.verbose)
-            cmdMake(cli!,
+            return cmdMake(cli!,
                 { verbose: argv.verbose },
                 { output:  argv.output, format: argv.format },
                 { dir:     argv.dir }
@@ -251,7 +251,13 @@ const cmdPreview = async (
                 { verbose: argv.verbose },
                 { addr:    argv.addr, port: argv.port },
                 { dir:     argv.dir }
-            )
+            ).catch((err) => {
+                if (err instanceof Error)
+                    cli!.log("error", err.message)
+                else
+                    cli!.log("error", String(err))
+                process.exit(1)
+            })
         })
         .command("preview <dir>", "preview rulebook rendering from source", (yargs) => {
             return yargs
@@ -289,7 +295,13 @@ const cmdPreview = async (
                 { verbose: argv.verbose },
                 { format:  argv.format, addr: argv.addr, port: argv.port },
                 { dir:     argv.dir }
-            )
+            ).catch((err) => {
+                if (err instanceof Error)
+                    cli!.log("error", err.message)
+                else
+                    cli!.log("error", String(err))
+                process.exit(1)
+            })
         })
         .help("h", "show usage help")
         .alias("h", "help")
