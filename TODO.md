@@ -9,4 +9,5 @@ TODO
 - cleanup colors in styl
 - add pdf export (princexml)
 - add filtering (sieve)
+- ToC generieren?
 
