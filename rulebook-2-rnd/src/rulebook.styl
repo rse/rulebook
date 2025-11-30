@@ -189,8 +189,11 @@ body
         list-style: none
         padding-left: 0
         li
+            margin-top: 1.00rem
             position: relative
             padding-left: 2.0rem
+        &:last-child
+            margin-bottom: 1.00rem
         li::before
             content: ''
             position: absolute
@@ -200,10 +203,6 @@ body
             height: 0.90rem
             background-color: var(--color-std-fg-3)
             border-radius: 2px
-    ul li
-        margin-top: 1.00rem
-    ul li:last-child
-        margin-bottom: 1.00rem
     .aspect.aspect-simple
         .demand,
         .what-and-why,
