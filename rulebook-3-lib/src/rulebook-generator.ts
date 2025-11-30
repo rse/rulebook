@@ -168,10 +168,6 @@ export class RulebookGenerator {
         html.group("<div class=\"content content-card\">", "</div>", (html) => {
             const aspects = this.repo.getAspects()
             for (const aspect of aspects) {
-                if (aspect.obj.Id === undefined)
-                    throw new Error("print format \"card\" requires aspect Id")
-                if (aspect.obj.Name === undefined)
-                    throw new Error("print format \"card\" requires aspect Name")
                 if (aspect.obj.Objective === undefined)
                     throw new Error("print format \"card\" requires aspect Objective")
                 html.group(`<div class="aspect aspect-card">`, "</div>", (html) => {
@@ -339,10 +335,6 @@ export class RulebookGenerator {
         html.group("<div class=\"content content-prose\">", "</div>", (html) => {
             html.group("<ul>", "</ul>", (html) => {
                 for (const aspect of aspects) {
-                    if (aspect.obj.Id === undefined)
-                        throw new Error("print format \"prose\" requires aspect Id")
-                    if (aspect.obj.Name === undefined)
-                        throw new Error("print format \"prose\" requires aspect Name")
                     if (aspect.obj.Objective === undefined)
                         throw new Error("print format \"prose\" requires aspect Objective")
                     html.group("<li>", "</li>", (html) => {
@@ -412,8 +404,6 @@ export class RulebookGenerator {
         html.group("<div class=\"content content-simple\">", "</div>", (html) => {
             html.group("<ul>", "</ul>", (html) => {
                 for (const aspect of aspects) {
-                    if (aspect.obj.Id !== undefined)
-                        throw new Error("print format \"simple\" does not support aspect Id")
                     if (aspect.obj.Objective !== undefined)
                         throw new Error("print format \"simple\" does not support aspect Objective")
                     if (this.typedKeys(aspect.obj.Assessment).length !== 1)
@@ -422,9 +412,8 @@ export class RulebookGenerator {
                     const assessment = aspect.obj.Assessment[level]!
                     html.group("<li>", "</li>", (html) => {
                         html.group(`<span class="aspect aspect-simple">`, "</span>", (html) => {
-                            html.add("<span class=\"id\">" + assessment.Id + "</span>: ")
-                            if (aspect.obj.Name !== undefined)
-                                html.add(`<span class="name">${this.md2html(aspect.obj.Name)}</span>`)
+                            html.add(`<span class="id">${this.md2html(aspect.obj.Id)}</span>: `)
+                            html.add(`<span class="name">${this.md2html(aspect.obj.Name)}</span>`)
                             html.group("<div class=\"demand\">", "</div>", (html) => {
                                 const types = [ "MUST", "SHOULD", "MAY"  ] as const
                                 const idx = assessment.Assess?.findIndex((a) => types.some((x) => a[x] !== undefined)) ?? -1

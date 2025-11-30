@@ -74,7 +74,7 @@ const AssessStatement = type({
 })
 
 const AssessmentLevel = type({
-    "Id":               "string",
+    "Id?":              "string",
     "What":             "string",
     "Why?":             "string",
     "Assess?":          AssessStatement.array(),
@@ -110,8 +110,8 @@ const Relation = type({
 export const AspectSchema = type({
     "Editing?":         Editing,
     "Validity?":        Validity,
-    "Id?":              "string",
-    "Name?":            "string",
+    "Id":               "string",
+    "Name":             "string",
     "Icons?":           "string[]",
     "Objective?":       "string",
     "Assessment":       Assessment,
