@@ -47,11 +47,16 @@ export const IndexSchema = type({
         "Dark":         "string"
     }),
     "Version":          "string",
-    "Author":           type({
+    "Publisher":        type({
         "Name":         "string",
         "Email":        RefEmail,
         "Web":          RefURL
     }),
+    "Authors?":         "string[]",
+    "Signatures?":      type({
+        "Name":         "string",
+        "Role":         "string"
+    }).array(),
     "Description":      "string",
     "Context":          type({
         "[string]":     type({

@@ -83,41 +83,78 @@ body
 body
     font-family:      var(--font-family)
     font-weight:      normal
-    font-size:        12pt
+    font-size:        11pt
     line-height:      125%
     position:         relative
-    padding: 5vw
+    padding:          5vw
+
+@page
+    size: A4
+    margin-top:    1.5cm
+    margin-left:   2.0cm
+    margin-right:  2.0cm
+    margin-bottom: 3.0cm
+    @bottom-center
+        content: flow(footer)
+        vertical-align: top
+
+.footer
+    -prince-flow: static(footer, start)
+    width: 100%
+    height: 1.5cm
+    display: none
+    flex-direction: row
+    justify-content: flex-start
+    align-items: flex-end
+    font-size: 80%
+    .left
+        flex-grow: 1
+        font-weight: 200
+    .right
+        flex-grow: 1
+        text-align: right
+        content: counter(page) " / " counter(pages)
+
+@media print
+    body
+        padding:0
+    .footer
+        display: flex
 
 .cover
+    width: 100%
+    height: 100vh
+    position: relative
+    display: flex
+    flex-direction: column
+    justify-content: flex-end
+    align-items: flex-start
+    .logo
+        position: absolute
+        top: 0
+        right: 0
+        width: 12rem
+    > .id
+        font-size: 500%
+        font-weight: 900
+        letter-spacing: -0.25rem
+        color: var(--color-acc-bg-3)
+        padding: 2rem 0 2rem 0
     > .title
-        font-size: 180%
+        width: 60%
+        font-size: 240%
         font-weight: bold
+        letter-spacing: -0.05rem
+        line-height: 120%
+        color: var(--color-acc-bg-4)
         padding: 1rem 0 1rem 0
-    .preamble
-        .description
-            margin-top: 0.5rem
-            text-align: justify
-            text-justify: inter-word
-            overflow-wrap: break-word
-            hyphens: auto
-            h3
-                color: var(--color-std-fg-2)
-                font-weight: normal
-                margin-top: 1.00rem
-                margin-bottom: 0
-            p
-                margin-top: 0.25rem
-                margin-bottom: 0.25rem
-            ul
-                margin-top: 0
-                margin-bottom: 0
-                li
-                    margin-top: 0
-                    margin-bottom: 0
+        string-set: title content()
     .version
         margin-top: 0.5rem
+        font-size: 125%
+        color: var(--color-acc-bg-5)
     .info
-        margin-top: 0.5rem
+        margin-top: 10rem
         display: flex
         flex-direction: row
         justify-content: flex-start
@@ -125,8 +162,9 @@ body
         gap: 2.0rem
         .box.editing,
         .box.validity
+            width: 15rem
             display: grid
-            grid-template-columns: 1fr 1fr
+            grid-template-columns: 0.5fr 1fr
             grid-template-rows: auto auto auto
             gap: 0
             .title
@@ -135,6 +173,83 @@ body
                 font-weight: normal
             .label
                 font-weight: 200
+    .publisher-and-authors
+        margin-top: 1.5rem
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        align-items: flex-start
+        gap: 2.0rem
+        .title
+            grid-column: 1 / -1
+            color: var(--color-std-fg-2)
+            font-weight: normal
+        .publisher
+            width: 15rem
+            display: flex
+            flex-direction: column
+            justify-content: flex-start
+            align-items: flex-start
+        .authors
+            display: flex
+            flex-direction: column
+            justify-content: flex-start
+            align-items: flex-start
+    .signatures-section
+        margin-top: 1.5rem
+        display: flex
+        flex-direction: column
+        justify-content: flex-start
+        align-items: flex-start
+        .title
+            grid-column: 1 / -1
+            color: var(--color-std-fg-2)
+            font-weight: normal
+        .signatures
+            margin-top: 0.5rem
+            display: flex
+            flex-direction: row
+            justify-content: flex-start
+            align-items: flex-start
+            gap: 1.0rem
+            .signature
+                flex-direction: column
+                justify-content: flex-start
+                align-items: flex-start
+                border-radius: 0.50rem
+                border: 0.1rem solid var(--color-std-fg-4)
+                padding: 5rem 0.5rem 0.5rem 0.5rem
+                width: 15rem
+                text-align: center
+                .role
+                    font-weight: 200
+.preamble
+    .description
+        margin-top: 0.5rem
+        text-align: justify
+        text-justify: inter-word
+        overflow-wrap: break-word
+        hyphens: auto
+        h3
+            font-size: 100%
+            color: var(--color-std-fg-2)
+            font-weight: normal
+            margin-top: 1.25rem
+            margin-bottom: 0
+        p
+            margin-top: 0.25rem
+            margin-bottom: 0.25rem
+        ul
+            margin-top: 0
+            margin-bottom: 0
+            li
+                margin-top: 0
+                margin-bottom: 0
+@media print
+    .preamble
+        break-before: page
+    .content
+        break-before: page
 
 .context
     .title
@@ -232,8 +347,8 @@ body
             margin-top: 1.25rem
             position: relative
             padding-left: 2.0rem
-        &:last-child
-            margin-bottom: 1.25rem
+            &:last-child
+                margin-bottom: 1.25rem
         li::before
             content: ''
             position: absolute
@@ -247,7 +362,7 @@ body
         .demand,
         .what-and-why,
         .sota
-            margin-top: 0.25rem
+            margin-top: 0.50rem
         .id
             color: var(--color-std-fg-1)
         .name

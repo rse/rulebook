@@ -103,7 +103,7 @@ export class RulebookGenerator {
         else if (format === "simple")
             this.printSimple(html)
         else
-            new Error("invalid print format")
+            throw new Error("invalid print format")
 
         /*  generate epilog  */
         this.printEpilog(html)
@@ -120,16 +120,20 @@ export class RulebookGenerator {
     /*  generate HTML output for prolog  */
     private async printProlog (html: Generator) {
         const index = this.repo.getIndex()!
+        html.group("<div class=\"footer\">", "</div>", (html) => {
+            html.add(`<div class="left">${index.obj.Name} (${index.obj.Id}) ${index.obj.Version}</div>`)
+            html.add("<div class=\"right\">0/0</div>")
+        })
         html.group("<div class=\"cover\">", "</div>", (html) => {
-            if (index.obj.Logo !== undefined) {
+            if (index.obj.Logo) {
                 html.group("<div class=\"logo\">", "</div>", (html) => {
-                    html.add(`<div class="light">${index.obj.Logo!.Light}</div>`)
-                    html.add(`<div class="dark">${index.obj.Logo!.Dark}</div>`)
+                    html.add(index.obj.Logo!.Light)
                 })
             }
-            html.add(`<div class="title">${index.obj.Name}</div>`)
-            html.add(`<div class="version">Version: ${index.obj.Version}</div>`)
 
+            html.add(`<div class="id">${index.obj.Id}</div>`)
+            html.add(`<div class="title">${index.obj.Name}</div>`)
+            html.add(`<div class="version">Version ${index.obj.Version}</div>`)
             html.group("<div class=\"info\">", "</div>", (html) => {
                 html.group("<div class=\"editing box\">", "</div>", (html) => {
                     html.add("<div class=\"title\">EDITING</div>")
@@ -143,11 +147,41 @@ export class RulebookGenerator {
                 })
             })
 
-            const description = this.md2html(index.obj.Description)
-            html.group("<div class=\"preamble\">", "</div>", (html) => {
-                html.add("<h2>PREAMBLE</h2>")
-                html.add(`<div class="description">${description}</div>`)
+            html.group("<div class=\"publisher-and-authors\">", "</div>", (html) => {
+                html.group("<div class=\"publisher\">", "</div>", (html) => {
+                    html.add("<div class=\"title\">PUBLISHER</div>")
+                    html.add(`<div class="name">${index.obj.Publisher.Name}</div>`)
+                    html.add(`<div class="email">${index.obj.Publisher.Email}</div>`)
+                    html.add(`<div class="web">${index.obj.Publisher.Web}</div>`)
+                })
+                if (index.obj.Authors) {
+                    html.group("<div class=\"authors\">", "</div>", (html) => {
+                        html.add("<div class=\"title\">AUTHORS</div>")
+                        for (const author of index.obj.Authors!)
+                            html.add(`<div class="author">${author}</div>`)
+                    })
+                }
             })
+
+            if (index.obj.Signatures) {
+                html.group("<div class=\"signatures-section\">", "</div>", (html) => {
+                    html.add("<div class=\"title\">SIGNATURES</div>")
+                    html.group("<div class=\"signatures\">", "</div>", (html) => {
+                        for (const signature of index.obj.Signatures!) {
+                            html.group("<div class=\"signature\">", "</div>", (html) => {
+                                html.add(`<div class="name">${signature.Name}</div>`)
+                                html.add(`<div class="role">${signature.Role}</div>`)
+                            })
+                        }
+                    })
+                })
+            }
+        })
+
+        const description = this.md2html(index.obj.Description)
+        html.group("<div class=\"preamble\">", "</div>", (html) => {
+            html.add("<h2>PREAMBLE</h2>")
+            html.add(`<div class="description">${description}</div>`)
         })
     }
 
