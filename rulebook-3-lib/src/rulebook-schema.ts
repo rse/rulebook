@@ -42,6 +42,9 @@ export const IndexSchema = type({
     "Validity":         Validity,
     "Id":               "string",
     "Name":             "string",
+    "Theme?":           type({
+        "Accent":       "string"
+    }),
     "Logo?":            type({
         "Light":        "string",
         "Dark":         "string"

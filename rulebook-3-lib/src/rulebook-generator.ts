@@ -108,11 +108,16 @@ export class RulebookGenerator {
         /*  generate epilog  */
         this.printEpilog(html)
 
+        /*  determine theme accent colors  */
+        const themeAccent = index.obj.Theme?.Accent ?? "#336699"
+        const css = templateCSS
+            .replace(/"@theme-accent@"/, themeAccent)
+
         /*  inject into HTML template  */
         let template = templateHTML
         template = template.replace(/@icon@/, iconSVG)
         template = template.replace(/@js@/,   templateJS)
-        template = template.replace(/@css@/,  templateCSS)
+        template = template.replace(/@css@/,  css)
         template = template.replace(/@html@/, html.render(4, 2))
         return template
     }

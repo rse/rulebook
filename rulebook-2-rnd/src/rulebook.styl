@@ -33,7 +33,8 @@
     --color-std-fg-2: #a0a0a0
     --color-std-fg-3: #c0c0c0
     --color-std-fg-4: #e0e0e0
-    --color-std-fg-5: #ffffff
+    --color-std-fg-5: #f0f0f0
+    --color-std-fg-6: #ffffff
 
     --color-acc-bg-0: #003366
     --color-acc-bg-1: #114477
@@ -72,6 +73,8 @@
     --color-acc-bg:   #336699
     --color-acc-fg:   #a0d0ff
 
+    --theme-accent:   "@theme-accent@"
+
     --font-family:    "TypoPRO Source Sans Pro", sans-serif
 
 html,
@@ -97,6 +100,11 @@ body
     @bottom-center
         content: flow(footer)
         vertical-align: top
+
+h1,
+h2,
+h3
+    color: var(--theme-accent)
 
 .footer
     -prince-flow: static(footer, start)
@@ -133,12 +141,12 @@ body
         position: absolute
         top: 0
         right: 0
-        width: 12rem
+        width: 14rem
     > .id
         font-size: 500%
         font-weight: 900
         letter-spacing: -0.25rem
-        color: var(--color-acc-bg-3)
+        color: var(--theme-accent)
         padding: 2rem 0 2rem 0
     > .title
         width: 60%
@@ -146,13 +154,13 @@ body
         font-weight: bold
         letter-spacing: -0.05rem
         line-height: 120%
-        color: var(--color-acc-bg-4)
+        color: var(--theme-accent)
         padding: 1rem 0 1rem 0
         string-set: title content()
     .version
         margin-top: 0.5rem
         font-size: 125%
-        color: var(--color-acc-bg-5)
+        color: var(--theme-accent)
     .info
         margin-top: 10rem
         display: flex
@@ -173,6 +181,7 @@ body
                 font-weight: normal
             .label
                 font-weight: 200
+                margin-right: 1rem
     .publisher-and-authors
         margin-top: 1.5rem
         display: flex
@@ -217,9 +226,9 @@ body
                 justify-content: flex-start
                 align-items: flex-start
                 border-radius: 0.50rem
-                border: 0.1rem solid var(--color-std-fg-4)
-                padding: 5rem 0.5rem 0.5rem 0.5rem
-                width: 15rem
+                border: 0.1rem solid var(--color-std-fg-5)
+                padding: 8rem 0.5rem 0.5rem 0.5rem
+                width: 20rem
                 text-align: center
                 .role
                     font-weight: 200
@@ -344,20 +353,20 @@ body
         list-style: none
         padding-left: 0
         li
-            margin-top: 1.25rem
+            margin-top: 1.50rem
             position: relative
-            padding-left: 2.0rem
+            padding-left: 3.0rem
             &:last-child
-                margin-bottom: 1.25rem
+                margin-bottom: 1.50rem
         li::before
             content: ''
             position: absolute
             left: 0
-            top: 0.20em
-            width: 0.90rem
-            height: 0.90rem
+            top: 0.40rem
+            width: 1.20rem
+            height: 1.20rem
             background-color: var(--color-std-fg-3)
-            border-radius: 2px
+            border-radius: 0.20rem
     .aspect.aspect-simple
         .demand,
         .what-and-why,
@@ -371,13 +380,12 @@ body
             font-weight: 600
         .what
             font-weight: 600
-            color: var(--color-acc-bg-3)
         .quote
             color: #999999
         .sota
             font-weight: 200
         .what-and-why
-            border-left: 0.4rem solid var(--color-acc-fg-1)
+            border-left: 0.4rem solid var(--theme-accent)
             padding-left: 1rem
             width: calc(100% - 1.4rem)
 
@@ -547,4 +555,4 @@ a
 a[href],
 a:hover[href],
 a:visited[href]
-    color: var(--color-acc-bg-3)
+    color: var(--theme-accent)
