@@ -89,16 +89,52 @@ body
     padding: 5vw
 
 .cover
-    .title
+    > .title
         font-size: 180%
         font-weight: bold
         padding: 1rem 0 1rem 0
-    .description
-        margin-top: 0.5rem
+    .preamble
+        .description
+            margin-top: 0.5rem
+            text-align: justify
+            text-justify: inter-word
+            overflow-wrap: break-word
+            hyphens: auto
+            h3
+                color: var(--color-std-fg-2)
+                font-weight: normal
+                margin-top: 1.00rem
+                margin-bottom: 0
+            p
+                margin-top: 0.25rem
+                margin-bottom: 0.25rem
+            ul
+                margin-top: 0
+                margin-bottom: 0
+                li
+                    margin-top: 0
+                    margin-bottom: 0
     .version
         margin-top: 0.5rem
-    .editing
+    .info
         margin-top: 0.5rem
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        align-items: flex-start
+        gap: 2.0rem
+        .box.editing,
+        .box.validity
+            display: grid
+            grid-template-columns: 1fr 1fr
+            grid-template-rows: auto auto auto
+            gap: 0
+            .title
+                grid-column: 1 / -1
+                color: var(--color-std-fg-2)
+                font-weight: normal
+            .label
+                font-weight: 200
 
 .context
     .title
@@ -185,15 +221,19 @@ body
             margin-bottom: 0.5rem
 
 .content.content-simple
+    text-align: justify
+    text-justify: inter-word
+    overflow-wrap: break-word
+    hyphens: auto
     ul
         list-style: none
         padding-left: 0
         li
-            margin-top: 1.00rem
+            margin-top: 1.25rem
             position: relative
             padding-left: 2.0rem
         &:last-child
-            margin-bottom: 1.00rem
+            margin-bottom: 1.25rem
         li::before
             content: ''
             position: absolute
@@ -210,14 +250,21 @@ body
             margin-top: 0.25rem
         .id
             color: var(--color-std-fg-1)
+        .name
+            font-weight: 600
         .assess
             font-weight: 600
         .what
             font-weight: 600
+            color: var(--color-acc-bg-3)
         .quote
             color: #999999
         .sota
             font-weight: 200
+        .what-and-why
+            border-left: 0.4rem solid var(--color-acc-fg-1)
+            padding-left: 1rem
+            width: calc(100% - 1.4rem)
 
 .assessment
     margin-top: 1vw

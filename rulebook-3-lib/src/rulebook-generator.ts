@@ -7,6 +7,7 @@
 /*  external dependencies  */
 import { marked }            from "marked"
 import { markedSmartypants } from "marked-smartypants"
+import textframe             from "textframe"
 
 /*  cross dependencies  */
 import iconSVG               from "../../rulebook-2-rnd/dst-stage1/rulebook-icon.svg"
@@ -42,10 +43,13 @@ export class RulebookGenerator {
 
     /*  convert markdown to HTML  */
     private md2html (markdown: string) {
+        markdown = textframe(markdown, {
+            tabsize:   8
+        })
         let html = marked(markdown, {
             async:     false,
             gfm:       true,
-            breaks:    true
+            breaks:    false
         })
         html = html.replace(/^\s*<p>/, "").replace(/<\/p>\s*$/, "")
         return html
@@ -124,18 +128,25 @@ export class RulebookGenerator {
                 })
             }
             html.add(`<div class="title">${index.obj.Name}</div>`)
-            const description = this.md2html(index.obj.Description)
-            html.add(`<div class="description">${description}</div>`)
             html.add(`<div class="version">Version: ${index.obj.Version}</div>`)
-            html.group("<div class=\"editing\">", "</div>", (html) => {
-                html.add("<div class=\"label\">Editing:</div>")
-                html.add(`<div class="created"><div class="label">Created:</div><div class="date">${index.obj.Editing.Created}</div></div>`)
-                html.add(`<div class="modified"><div class="label">Modified:</div><div class="date">${index.obj.Editing.Modified}</div></div>`)
+
+            html.group("<div class=\"info\">", "</div>", (html) => {
+                html.group("<div class=\"editing box\">", "</div>", (html) => {
+                    html.add("<div class=\"title\">EDITING</div>")
+                    html.add(`<div class="label">Created:</div><div class="value">${index.obj.Editing.Created}</div>`)
+                    html.add(`<div class="label">Modified:</div><div class="value">${index.obj.Editing.Modified}</div>`)
+                })
+                html.group("<div class=\"validity box\">", "</div>", (html) => {
+                    html.add("<div class=\"title\">VALIDITY</div>")
+                    html.add(`<div class="label">From:</div><div class="value">${index.obj.Validity.From}</div>`)
+                    html.add(`<div class="label">Until:</div><div class="value">${index.obj.Validity.Until}</div>`)
+                })
             })
-            html.group("<div class=\"validity\">", "</div>", (html) => {
-                html.add("<div class=\"label\">Validity:</div>")
-                html.add(`<div class="from"><div class="label">From:</div><div class="date">${index.obj.Validity.From}</div></div>`)
-                html.add(`<div class="until"><div class="label">Until:</div><div class="date">${index.obj.Validity.Until}</div></div>`)
+
+            const description = this.md2html(index.obj.Description)
+            html.group("<div class=\"preamble\">", "</div>", (html) => {
+                html.add("<h2>PREAMBLE</h2>")
+                html.add(`<div class="description">${description}</div>`)
             })
         })
     }
@@ -402,6 +413,7 @@ export class RulebookGenerator {
         /*  generate individual aspects  */
         const aspects = this.repo.getAspects()
         html.group("<div class=\"content content-simple\">", "</div>", (html) => {
+            html.add("<h2>MEASURES</h2>")
             html.group("<ul>", "</ul>", (html) => {
                 for (const aspect of aspects) {
                     if (aspect.obj.Objective !== undefined)
