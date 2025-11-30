@@ -110,10 +110,10 @@ const Relation = type({
 export const AspectSchema = type({
     "Editing?":         Editing,
     "Validity?":        Validity,
-    "Id":               "string",
-    "Name":             "string",
+    "Id?":              "string",
+    "Name?":            "string",
     "Icons?":           "string[]",
-    "Objective":        "string",
+    "Objective?":       "string",
     "Assessment":       Assessment,
     "Relations?":       Relation.array(),
     "+":                "reject"

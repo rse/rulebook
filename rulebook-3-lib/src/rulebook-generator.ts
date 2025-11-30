@@ -56,7 +56,7 @@ export class RulebookGenerator {
         let m: RegExpMatchArray | null
         if ((m = ref.match(/^ctx:([^.]+)\.([^.]+)(?:#(.+))?$/)) !== null)
             return `<a href="#ctx-${this.escapeHtml(m[1])}-${this.escapeHtml(m[2])}">${this.escapeHtml(m[1])}<span class="rarr">&#x25B6;</span>` +
-                `<strong>${this.escapeHtml(m[2])}${m[3] ? " # " + this.escapeHtml(m[3]) : ""}</strong></a>`
+                `<strong>${this.escapeHtml(m[2])}</strong>${m[3] ? "#" + this.escapeHtml(m[3]) : ""}</a>`
         else if ((m = ref.match(/^aspect:(.+)$/)) !== null) {
             const name = m[1]
             if ((m = name.match(/^(.+)#(.+)$/)) !== null)
@@ -96,8 +96,8 @@ export class RulebookGenerator {
             this.printCard(html)
         else if (format === "prose")
             this.printProse(html)
-        else if (format === "prose-simple")
-            this.printProseSimple(html)
+        else if (format === "simple")
+            this.printSimple(html)
         else
             new Error("invalid print format")
 
@@ -165,233 +165,312 @@ export class RulebookGenerator {
     /*  generate HTML output for Card format  */
     private async printCard (html: Generator) {
         /*  generate individual aspects  */
-        const aspects = this.repo.getAspects()
-        for (const aspect of aspects) {
-            html.group(`<div class="aspect aspect-card">`, "</div>", (html) => {
-                html.add(`<div class="title"><a name="${aspect.obj.Id}">${aspect.obj.Id}: ${aspect.obj.Name}</a></div>`)
-                html.group("<div class=\"header\">", "</div>", (html) => {
-                    html.group("<div class=\"header-left\">", "</div>", (html) => {
-                        html.add("<div class=\"subtitle\">OBJECTIVE</div>")
-                        const objective = this.md2html(aspect.obj.Objective ?? "(no objective)")
-                        html.add(`<div class="objective">${objective}</div>`)
-                    })
-                    if (aspect.obj.Editing !== undefined) {
-                        html.group("<div class=\"header-right-1\">", "</div>", (html) => {
-                            html.add("<div class=\"subtitle\">EDITING</div>")
-                            html.group("<div class=\"row\">", "</div>", (html) => {
-                                html.add(`<div class="label">Created</div><div class="date">${aspect.obj.Editing!.Created}</div>`)
-                            })
-                            html.group("<div class=\"row\">", "</div>", (html) => {
-                                html.add(`<div class="label">Modified</div><div class="date">${aspect.obj.Editing!.Modified}</div>`)
-                            })
+        html.group("<div class=\"content content-card\">", "</div>", (html) => {
+            const aspects = this.repo.getAspects()
+            for (const aspect of aspects) {
+                if (aspect.obj.Id === undefined)
+                    throw new Error("print format \"card\" requires aspect Id")
+                if (aspect.obj.Name === undefined)
+                    throw new Error("print format \"card\" requires aspect Name")
+                if (aspect.obj.Objective === undefined)
+                    throw new Error("print format \"card\" requires aspect Objective")
+                html.group(`<div class="aspect aspect-card">`, "</div>", (html) => {
+                    html.add(`<div class="title"><a name="${aspect.obj.Id}">${aspect.obj.Id}: ${aspect.obj.Name}</a></div>`)
+                    html.group("<div class=\"header\">", "</div>", (html) => {
+                        html.group("<div class=\"header-left\">", "</div>", (html) => {
+                            html.add("<div class=\"subtitle\">OBJECTIVE</div>")
+                            const objective = this.md2html(aspect.obj.Objective ?? "(no objective)")
+                            html.add(`<div class="objective">${objective}</div>`)
                         })
-                    }
-                    if (aspect.obj.Validity !== undefined) {
-                        html.group("<div class=\"header-right-2\">", "</div>", (html) => {
-                            html.add("<div class=\"subtitle\">VALIDITY</div>")
-                            html.group("<div class=\"row\">", "</div>", (html) => {
-                                html.add(`<div class="label">From</div><div class="date">${aspect.obj.Validity!.From}</div>`)
+                        if (aspect.obj.Editing !== undefined) {
+                            html.group("<div class=\"header-right-1\">", "</div>", (html) => {
+                                html.add("<div class=\"subtitle\">EDITING</div>")
+                                html.group("<div class=\"row\">", "</div>", (html) => {
+                                    html.add(`<div class="label">Created</div><div class="date">${aspect.obj.Editing!.Created}</div>`)
+                                })
+                                html.group("<div class=\"row\">", "</div>", (html) => {
+                                    html.add(`<div class="label">Modified</div><div class="date">${aspect.obj.Editing!.Modified}</div>`)
+                                })
                             })
-                            html.group("<div class=\"row\">", "</div>", (html) => {
-                                html.add(`<div class="label">Until</div><div class="date">${aspect.obj.Validity!.Until}</div>`)
-                            })
-                        })
-                    }
-                })
-                html.add("<div class=\"subtitle\">ASSESSMENT</div>")
-                html.group("<div class=\"assessment\">", "</div>", (html) => {
-                    const assessmentLevels = this.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))
-                    const assessments = assessmentLevels
-                        .map((key) => aspect.obj.Assessment[key])
-                        .filter((ass) => ass !== undefined)
-                    html.group("<div class=\"space\">", "</div>", (html) => {
-                        if (assessments.length > 1) {
-                            html.add(`<div class="bg">
-                                <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-                                    <polygon class="triangle-top" points="0,0 100,0 0,100"/>
-                                    <polygon class="triangle-bottom" points="100,0 100,100 0,100"/>
-                                </svg>
-                            </div>`)
-                            const optimizeLabels = assessments
-                                .filter((ass) => ass.Optimize !== undefined)
-                                .map((ass) => ass.Optimize!)
-                            const optimizeTop = optimizeLabels[0]
-                            if (optimizeTop === undefined)
-                                throw new Error(`first/top Optimize information missing in assessment of aspect ${aspect.obj.Id}`)
-                            const optimizeBottom = optimizeLabels[1]
-                            if (optimizeBottom === undefined)
-                                throw new Error(`second/bottom Optimize information missing in assessment of aspect ${aspect.obj.Id}`)
-                            html.add(`<div class="optimize-top">${optimizeTop}</div>`)
-                            html.add(`<div class="optimize-bottom">${optimizeBottom}</div>`)
                         }
-                        else
-                            html.add("<div class=\"bg empty\"></div>")
+                        if (aspect.obj.Validity !== undefined) {
+                            html.group("<div class=\"header-right-2\">", "</div>", (html) => {
+                                html.add("<div class=\"subtitle\">VALIDITY</div>")
+                                html.group("<div class=\"row\">", "</div>", (html) => {
+                                    html.add(`<div class="label">From</div><div class="date">${aspect.obj.Validity!.From}</div>`)
+                                })
+                                html.group("<div class=\"row\">", "</div>", (html) => {
+                                    html.add(`<div class="label">Until</div><div class="date">${aspect.obj.Validity!.Until}</div>`)
+                                })
+                            })
+                        }
                     })
-                    const types: string[] = []
-                    for (let i = 0; i < assessments.length; i++)
-                        types[i] = "NONE"
-                    const A = assessmentLevels.map((key) => aspect.obj.Assessment[key]!)
-                    for (let i = 0; i < A.length; i++) {
-                        for (const type of [ "WONT", "MAY", "SHOULD", "MUST" ] as const) {
-                            const idx = A[i].Assess?.findIndex((x) => (x as any)[type]?.match(/^ctx:Control\.msg-CTO$/)) ?? -1
-                            if (idx !== -1) {
-                                for (let j = i; j <= A.length; j++)
-                                    types[j] = (type === "MUST" && j > i ? "NONE" : type)
-                                break
+                    html.add("<div class=\"subtitle\">ASSESSMENT</div>")
+                    html.group("<div class=\"assessment\">", "</div>", (html) => {
+                        const assessmentLevels = this.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))
+                        const assessments = assessmentLevels
+                            .map((key) => aspect.obj.Assessment[key])
+                            .filter((ass) => ass !== undefined)
+                        html.group("<div class=\"space\">", "</div>", (html) => {
+                            if (assessments.length > 1) {
+                                html.add(`<div class="bg">
+                                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                                        <polygon class="triangle-top" points="0,0 100,0 0,100"/>
+                                        <polygon class="triangle-bottom" points="100,0 100,100 0,100"/>
+                                    </svg>
+                                </div>`)
+                                const optimizeLabels = assessments
+                                    .filter((ass) => ass.Optimize !== undefined)
+                                    .map((ass) => ass.Optimize!)
+                                const optimizeTop = optimizeLabels[0]
+                                if (optimizeTop === undefined)
+                                    throw new Error(`first/top Optimize information missing in assessment of aspect ${aspect.obj.Id}`)
+                                const optimizeBottom = optimizeLabels[1]
+                                if (optimizeBottom === undefined)
+                                    throw new Error(`second/bottom Optimize information missing in assessment of aspect ${aspect.obj.Id}`)
+                                html.add(`<div class="optimize-top">${optimizeTop}</div>`)
+                                html.add(`<div class="optimize-bottom">${optimizeBottom}</div>`)
+                            }
+                            else
+                                html.add("<div class=\"bg empty\"></div>")
+                        })
+                        const types: string[] = []
+                        for (let i = 0; i < assessments.length; i++)
+                            types[i] = "NONE"
+                        const A = assessmentLevels.map((key) => aspect.obj.Assessment[key]!)
+                        for (let i = 0; i < A.length; i++) {
+                            for (const type of [ "WONT", "MAY", "SHOULD", "MUST" ] as const) {
+                                const idx = A[i].Assess?.findIndex((x) => (x as any)[type]?.match(/^ctx:Control\.msg-CTO$/)) ?? -1
+                                if (idx !== -1) {
+                                    for (let j = i; j <= A.length; j++)
+                                        types[j] = (type === "MUST" && j > i ? "NONE" : type)
+                                    break
+                                }
                             }
                         }
-                    }
-                    html.group("<div class=\"levels\">", "</div>", (html) => {
-                        let i = 0
-                        for (const level of assessmentLevels) {
-                            const assessment = aspect.obj.Assessment[level]!
-                            const type = types[i++]
-                            html.group(`<div class="level ${type}">`, "</div>", (html) => {
-                                html.add("<div class=\"color\"></div>")
-                                html.group("<div class=\"name\">", "</div>", (html) => {
-                                    html.add(`<a name="${aspect.obj.Id}-${assessment.Id}">${assessment.Id}</a>`)
-                                })
-                                html.group("<div class=\"info\">", "</div>", (html) => {
-                                    html.group("<div class=\"row\">", "</div>", (html) => {
-                                        html.add("<div class=\"label what\">What</div>")
-                                        html.add(`<div class="value what">${this.md2html(assessment.What)}</div>`)
+                        html.group("<div class=\"levels\">", "</div>", (html) => {
+                            let i = 0
+                            for (const level of assessmentLevels) {
+                                const assessment = aspect.obj.Assessment[level]!
+                                const type = types[i++]
+                                html.group(`<div class="level ${type}">`, "</div>", (html) => {
+                                    html.add("<div class=\"color\"></div>")
+                                    html.group("<div class=\"name\">", "</div>", (html) => {
+                                        html.add(`<a name="${aspect.obj.Id}-${assessment.Id}">${assessment.Id}</a>`)
                                     })
-                                    if (assessment.Why) {
+                                    html.group("<div class=\"info\">", "</div>", (html) => {
                                         html.group("<div class=\"row\">", "</div>", (html) => {
-                                            html.add("<div class=\"label why\">Why</div>")
-                                            html.add(`<div class="value why">${this.md2html(assessment.Why!)}</div>`)
+                                            html.add("<div class=\"label what\">What</div>")
+                                            html.add(`<div class="value what">${this.md2html(assessment.What)}</div>`)
                                         })
+                                        if (assessment.Why) {
+                                            html.group("<div class=\"row\">", "</div>", (html) => {
+                                                html.add("<div class=\"label why\">Why</div>")
+                                                html.add(`<div class="value why">${this.md2html(assessment.Why!)}</div>`)
+                                            })
+                                        }
+                                        if (assessment.Assess) {
+                                            html.group("<div class=\"row\">", "</div>", (html) => {
+                                                html.add("<div class=\"label assess\">Assess</div>")
+                                                html.group("<div class=\"value assess\">", "</div>", (html) => {
+                                                    let first = true
+                                                    for (const ass of assessment.Assess!) {
+                                                        if (!first)
+                                                            html.append(", ")
+                                                        else
+                                                            first = false
+                                                        if (ass.MUST !== undefined)
+                                                            html.append(`${this.ref2html(ass.MUST)}: <span class="assess">MUST</span>`)
+                                                        else if (ass.SHOULD !== undefined)
+                                                            html.append(`${this.ref2html(ass.SHOULD)}: <span class="assess">SHOULD</span>`)
+                                                        else if (ass.MAY !== undefined)
+                                                            html.append(`${this.ref2html(ass.MAY)}: <span class="assess">MAY</span>`)
+                                                        else if (ass.WONT !== undefined)
+                                                            html.append(`${this.ref2html(ass.WONT)}: <span class="assess">WONT</span>`)
+                                                    }
+                                                })
+                                            })
+                                        }
+                                        if (assessment.SotA) {
+                                            html.group("<div class=\"row\">", "</div>", (html) => {
+                                                html.add("<div class=\"label sota\">SotA</div>")
+                                                html.add(`<div class="value sota">${this.md2html(assessment.SotA!)}</div>`)
+                                            })
+                                        }
+                                    })
+                                })
+                            }
+                        })
+                    })
+                    if ((aspect.obj.Relations?.length ?? 0) > 0) {
+                        html.add("<div class=\"subtitle\">RELATIONS</div>")
+                        html.group("<div class=\"relations\">", "</div>", (html) => {
+                            html.group("<div class=\"column\">", "</div>", (html) => {
+                                for (const type of [ "Scope", "Context", "Support", "Demand", "Responsible", "See-Also" ] as const) {
+                                    const entries = aspect.obj.Relations!.filter((relation) => relation[type])
+                                    if (type === "Demand") {
+                                        html.add("</div>")
+                                        html.add("<div class=\"column\">")
                                     }
-                                    if (assessment.Assess) {
-                                        html.group("<div class=\"row\">", "</div>", (html) => {
-                                            html.add("<div class=\"label assess\">Assess</div>")
-                                            html.group("<div class=\"value assess\">", "</div>", (html) => {
-                                                let first = true
-                                                for (const ass of assessment.Assess!) {
-                                                    if (!first)
-                                                        html.append(", ")
-                                                    else
-                                                        first = false
-                                                    if (ass.MUST !== undefined)
-                                                        html.append(`${this.ref2html(ass.MUST)}: <span class="assess">MUST</span>`)
-                                                    else if (ass.SHOULD !== undefined)
-                                                        html.append(`${this.ref2html(ass.SHOULD)}: <span class="assess">SHOULD</span>`)
-                                                    else if (ass.MAY !== undefined)
-                                                        html.append(`${this.ref2html(ass.MAY)}: <span class="assess">MAY</span>`)
-                                                    else if (ass.WONT !== undefined)
-                                                        html.append(`${this.ref2html(ass.WONT)}: <span class="assess">WONT</span>`)
-                                                }
+                                    if (entries.length > 0) {
+                                        html.group("<div class=\"row\">\n", "</div>", (html) => {
+                                            html.add(`<div class="type">${type}</div>\n`)
+                                            html.group("<div class=\"refs\">", "</div>", (html) => {
+                                                let refs = ""
+                                                for (const entry of entries)
+                                                    refs += (refs !== "" ? ", " : "") + this.ref2html(entry[type]!)
+                                                html.add(refs)
                                             })
                                         })
                                     }
-                                    if (assessment.SotA) {
-                                        html.group("<div class=\"row\">", "</div>", (html) => {
-                                            html.add("<div class=\"label sota\">SotA</div>")
-                                            html.add(`<div class="value sota">${this.md2html(assessment.SotA!)}</div>`)
-                                        })
-                                    }
-                                })
+                                }
                             })
-                        }
-                    })
-                })
-                if ((aspect.obj.Relations?.length ?? 0) > 0) {
-                    html.add("<div class=\"subtitle\">RELATIONS</div>")
-                    html.group("<div class=\"relations\">", "</div>", (html) => {
-                        html.group("<div class=\"column\">", "</div>", (html) => {
-                            for (const type of [ "Scope", "Context", "Support", "Demand", "Responsible", "See-Also" ] as const) {
-                                const entries = aspect.obj.Relations!.filter((relation) => relation[type])
-                                if (type === "Demand") {
-                                    html.add("</div>")
-                                    html.add("<div class=\"column\">")
-                                }
-                                if (entries.length > 0) {
-                                    html.group("<div class=\"row\">\n", "</div>", (html) => {
-                                        html.add(`<div class="type">${type}</div>\n`)
-                                        html.group("<div class=\"refs\">", "</div>", (html) => {
-                                            let refs = ""
-                                            for (const entry of entries)
-                                                refs += (refs !== "" ? ", " : "") + this.ref2html(entry[type]!)
-                                            html.add(refs)
-                                        })
-                                    })
-                                }
-                            }
                         })
-                    })
-                }
-            })
-        }
+                    }
+                })
+            }
+        })
     }
 
     /*  generate HTML output for Prose format  */
     private async printProse (html: Generator) {
         /*  generate individual aspects  */
         const aspects = this.repo.getAspects()
-        html.group("<ul>", "</ul>", (html) => {
-            for (const aspect of aspects) {
-                const singleAssessmentAspect = (this.typedKeys(aspect.obj.Assessment).length === 1)
-                html.group("<li>", "</li>", (html) => {
-                    html.group(`<div class="aspect aspect-prose">`, "</div>", (html) => {
-                        html.group(`<a name="${aspect.obj.Id}">`, "</a>", (html) => {
-                            html.group("<span class=\"title\">", "</span>", (html) => {
-                                html.add(`<span class="id">${aspect.obj.Id}</span>: `)
-                                html.add(`<span class="name">${aspect.obj.Name}</span>`)
+        html.group("<div class=\"content content-prose\">", "</div>", (html) => {
+            html.group("<ul>", "</ul>", (html) => {
+                for (const aspect of aspects) {
+                    if (aspect.obj.Id === undefined)
+                        throw new Error("print format \"prose\" requires aspect Id")
+                    if (aspect.obj.Name === undefined)
+                        throw new Error("print format \"prose\" requires aspect Name")
+                    if (aspect.obj.Objective === undefined)
+                        throw new Error("print format \"prose\" requires aspect Objective")
+                    html.group("<li>", "</li>", (html) => {
+                        html.group(`<div class="aspect aspect-prose">`, "</div>", (html) => {
+                            html.group(`<a name="${aspect.obj.Id}">`, "</a>", (html) => {
+                                html.group("<span class=\"title\">", "</span>", (html) => {
+                                    html.add(`<span class="id">${aspect.obj.Id}</span>: `)
+                                    html.add(`<span class="name">${this.md2html(aspect.obj.Name ?? "(no name)")}</span>`)
+                                })
+                            })
+                            html.add("<br/>")
+                            const objective = this.md2html(aspect.obj.Objective ?? "(no objective)")
+                            html.add(`<span class="objective">${objective}</span>`)
+                            html.group("<ul>", "</ul>", (html) => {
+                                for (const level of this.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))) {
+                                    const assessment = aspect.obj.Assessment[level]!
+                                    const types = [ "MUST", "SHOULD", "MAY"  ] as const
+                                    const idx = assessment.Assess?.findIndex((a) => types.some((x) => a[x] !== undefined)) ?? -1
+                                    if (idx === -1)
+                                        continue
+                                    html.group("<li>", "</li>", (html) => {
+                                        html.add("<span class=\"id\">" + assessment.Id + "</span>: ")
+                                        let first = true
+                                        for (const type of types) {
+                                            for (const ass of assessment.Assess!) {
+                                                if (ass[type] !== undefined) {
+                                                    if (!first)
+                                                        html.append(", and ")
+                                                    else
+                                                        first = false
+                                                    html.append(`${this.ref2html(ass[type])} demands you `)
+                                                    html.append(`<span class="assess">${type}</span>`)
+                                                }
+                                            }
+                                        }
+                                        html.append(": ")
+                                        html.append("<span class=\"quote\">&laquo;</span>")
+                                        html.append("<span class=\"what\">" + this.md2html(assessment.What) + "</span>")
+                                        html.append("<span class=\"quote\">&raquo;</span>")
+                                        if (assessment.Why) {
+                                            html.append(", because of ")
+                                            html.append("<span class=\"quote\">&laquo;</span>")
+                                            html.append(this.md2html(assessment.Why))
+                                            html.append("<span class=\"quote\">&raquo;</span>")
+                                        }
+                                        html.append(".")
+                                        if (assessment.SotA) {
+                                            html.append(" <span class=\"sota\">For this you can use: ")
+                                            html.append("<span class=\"quote\">&laquo;</span>")
+                                            html.append(this.md2html(assessment.SotA))
+                                            html.append("<span class=\"quote\">&raquo;</span>.</span>")
+                                        }
+                                    })
+                                }
                             })
                         })
-                        html.add("<br/>")
-                        const objective = this.md2html(aspect.obj.Objective ?? "(no objective)")
-                        html.add(`<span class="objective">${objective}</span>`)
-                        html.group("<ul>", "</ul>", (html) => {
-                            for (const level of this.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))) {
-                                const assessment = aspect.obj.Assessment[level]!
+                    })
+                }
+            })
+        })
+    }
+
+    /*  generate HTML output for Simple format  */
+    private async printSimple (html: Generator) {
+        /*  generate individual aspects  */
+        const aspects = this.repo.getAspects()
+        html.group("<div class=\"content content-simple\">", "</div>", (html) => {
+            html.group("<ul>", "</ul>", (html) => {
+                for (const aspect of aspects) {
+                    if (aspect.obj.Id !== undefined)
+                        throw new Error("print format \"simple\" does not support aspect Id")
+                    if (aspect.obj.Objective !== undefined)
+                        throw new Error("print format \"simple\" does not support aspect Objective")
+                    if (this.typedKeys(aspect.obj.Assessment).length !== 1)
+                        throw new Error("print format \"simple\" supports assessment with a single level only")
+                    const level = this.typedKeys(aspect.obj.Assessment)[0]
+                    const assessment = aspect.obj.Assessment[level]!
+                    html.group("<li>", "</li>", (html) => {
+                        html.group(`<span class="aspect aspect-simple">`, "</span>", (html) => {
+                            html.add("<span class=\"id\">" + assessment.Id + "</span>: ")
+                            if (aspect.obj.Name !== undefined)
+                                html.add(`<span class="name">${this.md2html(aspect.obj.Name)}</span>`)
+                            html.group("<div class=\"demand\">", "</div>", (html) => {
                                 const types = [ "MUST", "SHOULD", "MAY"  ] as const
                                 const idx = assessment.Assess?.findIndex((a) => types.some((x) => a[x] !== undefined)) ?? -1
                                 if (idx === -1)
-                                    continue
-                                html.group("<li>", "</li>", (html) => {
-                                    html.add("<span class=\"id\">" + assessment.Id + "</span>: ")
-                                    let first = true
-                                    for (const type of types) {
-                                        for (const ass of assessment.Assess!) {
-                                            if (ass[type] !== undefined) {
-                                                if (!first)
-                                                    html.append(", and ")
-                                                else
-                                                    first = false
-                                                html.append(`${this.ref2html(ass[type])} demands you `)
-                                                html.append(`<span class="assess">${type}</span>`)
-                                            }
+                                    throw new Error("print format \"simple\" requires at least one assessment")
+                                let first = true
+                                for (const type of types) {
+                                    for (const ass of assessment.Assess!) {
+                                        if (ass[type] !== undefined) {
+                                            if (!first)
+                                                html.append(", and ")
+                                            else
+                                                first = false
+                                            html.append(`${this.ref2html(ass[type])} demands you `)
+                                            html.append(`<span class="assess">${type}</span>`)
                                         }
                                     }
-                                    html.append(": ")
+                                }
+                                html.append(":")
+                            })
+                            html.group("<div class=\"what-and-why\">", "</div>", (html) => {
+                                html.append("<span class=\"quote\">&laquo;</span>")
+                                html.append("<span class=\"what\">" + this.md2html(assessment.What.replace(/\.\s*$/, "")) + "</span>")
+                                html.append("<span class=\"quote\">&raquo;</span>")
+                                if (assessment.Why) {
+                                    html.append(", because of ")
                                     html.append("<span class=\"quote\">&laquo;</span>")
-                                    html.append("<span class=\"what\">" + this.md2html(assessment.What) + "</span>")
+                                    html.append(this.md2html(assessment.Why.replace(/\.\s*$/, "")))
                                     html.append("<span class=\"quote\">&raquo;</span>")
-                                    if (assessment.Why) {
-                                        html.append(", because of ")
-                                        html.append("<span class=\"quote\">&laquo;</span>")
-                                        html.append(this.md2html(assessment.Why))
-                                        html.append("<span class=\"quote\">&raquo;</span>")
-                                    }
-                                    html.append(".")
-                                    if (assessment.SotA) {
-                                        html.append(" <span class=\"sota\">For this you can use: ")
-                                        html.append("<span class=\"quote\">&laquo;</span>")
-                                        html.append(this.md2html(assessment.SotA))
-                                        html.append("<span class=\"quote\">&raquo;</span>.</span>")
-                                    }
+                                }
+                                html.append(".")
+                            })
+                            if (assessment.SotA) {
+                                html.group("<div class=\"sota\">", "</div>", (html) => {
+                                    html.append("<span class=\"sota\">For this you can use: ")
+                                    html.append("<span class=\"quote\">&laquo;</span>")
+                                    html.append(this.md2html(assessment.SotA!.replace(/\.\s*$/, "")))
+                                    html.append(", etc")
+                                    html.append("<span class=\"quote\">&raquo;</span>.</span>")
                                 })
                             }
                         })
                     })
-                })
-            }
+                }
+            })
         })
-    }
-
-    /*  generate HTML output for Prose (simple) format  */
-    private async printProseSimple (html: Generator) {
     }
 }
 

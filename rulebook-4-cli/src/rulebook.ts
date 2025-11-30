@@ -203,7 +203,7 @@ const cmdPreview = async (
                     array:        false,
                     nargs:        1,
                     default:      "card",
-                    describe:     "output format (\"card\", \"prose\", \"app\")"
+                    describe:     "output format (\"card\", \"prose\", \"simple\", \"app\")"
                 })
                 .positional("dir", {
                     type:         "string",
@@ -261,7 +261,7 @@ const cmdPreview = async (
                     array:        false,
                     nargs:        1,
                     default:      "card",
-                    describe:     "output format (\"card\", \"prose\", \"app\")"
+                    describe:     "output format (\"card\", \"prose\", \"simple\", \"app\")"
                 })
                 .option("address", {
                     alias:    "a",

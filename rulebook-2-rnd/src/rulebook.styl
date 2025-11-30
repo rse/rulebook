@@ -106,81 +106,104 @@ body
         font-weight: bold
         padding: 2rem 0 0.5rem 0
 
-.aspect.aspect-card
-    margin-top: 2rem
-    .title
-        font-size: 160%
-        font-weight: bold
-        background-color: #666666
-        color: #ffffff
-        padding: 0.5rem 0.5rem 0.5rem 0.5rem
-        border-radius: 0.25rem
-    .subtitle
-        margin-top: 1.0rem
-        margin-bottom: 0.5rem
-        font-weight: 200
-        width: calc(100% - 1.0rem)
-        background-color: #f0f0f0
-        color: #666666
-        padding: 0.10rem 0.5rem 0.10rem 0.5rem
-        border-radius: 0.25rem
-    .header
-        display: flex
-        flex-direction: row
-        justify-content: flex-start
-        align-items: stretch
-        gap: 0.5rem
-        .header-left
-            flex-grow: 1
-        .header-right-1
-            width: 20%
-        .header-right-2
-            width: 20%
-        .header-right-1,
-        .header-right-2
+.content.content-card
+    .aspect.aspect-card
+        margin-top: 2rem
+        .title
+            font-size: 160%
+            font-weight: bold
+            background-color: #666666
+            color: #ffffff
+            padding: 0.5rem 0.5rem 0.5rem 0.5rem
+            border-radius: 0.25rem
+        .subtitle
+            margin-top: 1.0rem
+            margin-bottom: 0.5rem
+            font-weight: 200
+            width: calc(100% - 1.0rem)
+            background-color: #f0f0f0
+            color: #666666
+            padding: 0.10rem 0.5rem 0.10rem 0.5rem
+            border-radius: 0.25rem
+        .header
             display: flex
-            flex-direction: column
+            flex-direction: row
             justify-content: flex-start
             align-items: stretch
-            .row
+            gap: 0.5rem
+            .header-left
+                flex-grow: 1
+            .header-right-1
+                width: 20%
+            .header-right-2
+                width: 20%
+            .header-right-1,
+            .header-right-2
                 display: flex
-                flex-direction: row
+                flex-direction: column
                 justify-content: flex-start
                 align-items: stretch
-                .label
-                    font-weight: 200
-                    width: 6rem
-                    min-width: 6rem
-                    max-width: 6rem
-                .date
-                    flex-grow: 1
-    .objective
-        margin-top: 0.5rem
-        font-size: 120%
-        line-height: 1.2
+                .row
+                    display: flex
+                    flex-direction: row
+                    justify-content: flex-start
+                    align-items: stretch
+                    .label
+                        font-weight: 200
+                        width: 6rem
+                        min-width: 6rem
+                        max-width: 6rem
+                    .date
+                        flex-grow: 1
+        .objective
+            margin-top: 0.5rem
+            font-size: 120%
+            line-height: 1.2
 
-.aspect.aspect-prose
-    .title
-        .id
-            color: var(--color-std-fg-1)
-        .name
-            color: var(--color-std-bg-2)
-            font-weight: bold
-    ul
-        .id
-            color: var(--color-std-fg-1)
-    .assess
-        font-weight: 600
-    .what
-        font-weight: 600
-    .quote
-        color: #999999
-    .sota
-        font-weight: 200
+.content.content-prose
+    .aspect.aspect-prose
+        .title
+            .id
+                color: var(--color-std-fg-1)
+            .name
+                color: var(--color-std-bg-2)
+                font-weight: bold
+        ul
+            .id
+                color: var(--color-std-fg-1)
+        .assess
+            font-weight: 600
+        .what
+            font-weight: 600
+        .quote
+            color: #999999
+        .sota
+            font-weight: 200
+        ul li
+            margin-top: 0.5rem
+        ul li:last-child
+            margin-bottom: 0.5rem
+
+.content.content-simple
     ul li
-        margin-top: 0.5rem
+        margin-top: 1.00rem
     ul li:last-child
-        margin-bottom: 0.5rem
+        margin-bottom: 1.00rem
+    .aspect.aspect-simple
+        .demand,
+        .what-and-why,
+        .sota
+            margin-top: 0.25rem
+        .id
+            color: var(--color-std-fg-1)
+        .assess
+            font-weight: 600
+        .what
+            font-weight: 600
+        .quote
+            color: #999999
+        .sota
+            font-weight: 200
 
 .assessment
     margin-top: 1vw
