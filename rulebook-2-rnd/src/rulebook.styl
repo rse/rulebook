@@ -185,6 +185,21 @@ body
             margin-bottom: 0.5rem
 
 .content.content-simple
+    ul
+        list-style: none
+        padding-left: 0
+        li
+            position: relative
+            padding-left: 2.0rem
+        li::before
+            content: ''
+            position: absolute
+            left: 0
+            top: 0.20em
+            width: 0.90rem
+            height: 0.90rem
+            background-color: var(--color-std-fg-3)
+            border-radius: 2px
     ul li
         margin-top: 1.00rem
     ul li:last-child
