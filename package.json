@@ -14,7 +14,6 @@
         "url":          "http://engelschall.com"
     },
     "devDependencies": {
-        "@rse/stx":           "1.1.2",
         "nodemon":            "3.1.11",
         "watch":              "1.0.2",
         "concurrently":       "9.2.1",
