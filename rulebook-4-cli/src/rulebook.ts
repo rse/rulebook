@@ -87,8 +87,7 @@ const parseRulebook = async (cli: CLIio, dir: string) => {
 /*  format rulebook  */
 const formatRulebook = async (cli: CLIio, rulebook: Rulebook, format: string) => {
     cli.log("info", `formatting rulebook into format "${format}"`)
-    const output = await rulebook.print(format)
-    return output
+    return rulebook.print(format)
 }
 
 /*  command handler: make  */
