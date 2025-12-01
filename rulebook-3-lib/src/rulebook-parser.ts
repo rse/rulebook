@@ -161,13 +161,13 @@ export class RulebookParser {
     /*  parse index YAML specification  */
     parseIndex (file: string, yaml: string) {
         const index = this.parseYamlWithSchema(file, yaml, "index", IndexSchema)
-        this.repo.setIndex(index as RulebookArtifact<IndexType>)
+        this.repo.setIndex(index)
     }
 
     /*  parse aspect YAML specification  */
     parseAspect (file: string, yaml: string) {
         const aspect = this.parseYamlWithSchema(file, yaml, "aspect", AspectSchema)
-        this.repo.addAspect(aspect as RulebookArtifact<AspectType>)
+        this.repo.addAspect(aspect)
     }
 
     /*  helper function for checking aspect references  */
