@@ -22,6 +22,8 @@ export class Generator {
             return this.child.append(content)
         if (this.content.length === 0)
             this.content.push(content)
+        else if (typeof this.content[this.content.length - 1] !== "string")
+            this.content.push(content)
         else
             this.content[this.content.length - 1] += content
     }
