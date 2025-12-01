@@ -280,7 +280,7 @@ export class RulebookGenerator {
                         const A = assessmentLevels.map((key) => aspect.obj.Assessment[key]!)
                         for (let i = 0; i < A.length; i++) {
                             for (const type of [ "WONT", "MAY", "SHOULD", "MUST" ] as const) {
-                                const idx = A[i].Assess?.findIndex((x) => (x as any)[type]?.match(/^ctx:Control\.msg-CTO$/)) ?? -1
+                                const idx = A[i].Assess?.findIndex((x) => x[type]?.match(/^ctx:Control\.msg-CTO$/)) ?? -1
                                 if (idx !== -1) {
                                     for (let j = i; j <= A.length; j++)
                                         types[j] = (type === "MUST" && j > i ? "NONE" : type)
