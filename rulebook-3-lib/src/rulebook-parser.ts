@@ -271,22 +271,22 @@ export class RulebookParser {
             aspect.obj.Relations?.forEach((relation, i) => {
                 if (relation.Scope !== undefined)
                     this.checkRefAspect(`aspect with id ${aspect.obj.Id}`, aspect,
-                        [ "Relation", String(i), "Scope" ], relation.Scope)
+                        [ "Relations", String(i), "Scope" ], relation.Scope)
                 if (relation.Demand !== undefined)
                     this.checkRefCtx(`aspect with id ${aspect.obj.Id}`, aspect,
-                        [ "Relation", String(i), "Demand" ], relation.Demand)
+                        [ "Relations", String(i), "Demand" ], relation.Demand)
                 if (relation.Context !== undefined)
                     this.checkRefCtx(`aspect with id ${aspect.obj.Id}`, aspect,
-                        [ "Relation", String(i), "Context" ], relation.Context)
+                        [ "Relations", String(i), "Context" ], relation.Context)
                 if (relation.Responsible !== undefined)
                     this.checkRefCtx(`aspect with id ${aspect.obj.Id}`, aspect,
-                        [ "Relation", String(i), "Responsible" ], relation.Responsible)
+                        [ "Relations", String(i), "Responsible" ], relation.Responsible)
                 if (relation["See-Also"] !== undefined && relation["See-Also"].match(/^ctx:/))
                     this.checkRefCtx(`aspect with id ${aspect.obj.Id}`, aspect,
-                        [ "Relation", String(i), "See-Also" ], relation["See-Also"])
+                        [ "Relations", String(i), "See-Also" ], relation["See-Also"])
                 if (relation["See-Also"] !== undefined && relation["See-Also"].match(/^aspect:/))
                     this.checkRefAspect(`aspect with id ${aspect.obj.Id}`, aspect,
-                        [ "Relation", String(i), "See-Also" ], relation["See-Also"])
+                        [ "Relations", String(i), "See-Also" ], relation["See-Also"])
             })
         }
     }
