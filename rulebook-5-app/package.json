@@ -24,7 +24,7 @@
         "@rse/stx":                         "1.1.2"
     },
     "devDependencies": {
-        "vite":                             "7.2.4",
+        "vite":                             "7.2.6",
         "@typescript-eslint/eslint-plugin": "8.48.0",
         "@typescript-eslint/parser":        "8.48.0",
         "@vitejs/plugin-vue":               "6.0.2",
