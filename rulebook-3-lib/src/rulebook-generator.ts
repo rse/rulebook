@@ -88,25 +88,24 @@ export class RulebookGenerator {
         const html = new utils.Generator()
 
         /*  generate prolog  */
-        this.printProlog(html)
+        await this.printProlog(html)
 
         /*  dispatch according to format  */
         if (format === "card")
-            this.printCard(html)
+            await this.printCard(html)
         else if (format === "prose")
-            this.printProse(html)
+            await this.printProse(html)
         else if (format === "simple")
-            this.printSimple(html)
+            await this.printSimple(html)
         else
             throw new Error("invalid print format")
 
         /*  generate epilog  */
-        this.printEpilog(html)
+        await this.printEpilog(html)
 
         /*  determine theme accent colors  */
         const themeAccent = index.obj.Theme?.Accent ?? "#336699"
-        const css = templateCSS
-            .replace(/"@theme-accent@"/, themeAccent)
+        const css = templateCSS.replace(/"@theme-accent@"/, themeAccent)
 
         /*  inject into HTML template  */
         let template = templateHTML
