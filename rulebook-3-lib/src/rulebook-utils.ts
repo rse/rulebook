@@ -74,7 +74,7 @@ export class Generator {
             for (const entry of content) {
                 if (typeof entry === "string")
                     text += pad.repeat(level) + entry + "\n"
-                else if (typeof entry === "object" && entry instanceof Generator)
+                else if (entry instanceof Generator)
                     text += renderLevel(level + 1, entry.content)
             }
             return text
