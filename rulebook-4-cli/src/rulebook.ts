@@ -151,7 +151,7 @@ const cmdPreview = async (
     const pkg = JSON.parse(pkgJSON)
     const response = await axios({
         method: "GET",
-        url:    "https://api.github.com/repos/rse/rundown/tagsx"
+        url:    "https://api.github.com/repos/rse/rundown/tags"
     }).then((response) => response.data).catch(() => [])
     if (typeof response === "object"
         && response !== null
@@ -225,7 +225,7 @@ const cmdPreview = async (
         })
         .command("serve <dir>", "serve rulebook rendering", (yargs) => {
             return yargs
-                .option("address", {
+                .option("addr", {
                     alias:    "a",
                     type:     "string",
                     array:    false,
@@ -269,7 +269,7 @@ const cmdPreview = async (
                     default:      "card",
                     describe:     "output format (\"card\", \"prose\", \"simple\", \"app\")"
                 })
-                .option("address", {
+                .option("addr", {
                     alias:    "a",
                     type:     "string",
                     array:    false,
