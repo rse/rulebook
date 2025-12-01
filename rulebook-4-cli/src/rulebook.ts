@@ -129,7 +129,8 @@ const cmdPreview = async (
 /*  establish asynchronous environment  */
 ;(async () => {
     /*  determine system paths  */
-    const { dataDir: _dataDir } = syspath({
+    /* eslint no-unused-vars: off */
+    const { dataDir } = syspath({
         appName: "rulebook",
         dataDirAutoCreate: true
     })
@@ -166,7 +167,7 @@ const cmdPreview = async (
 
     /*  parse command-line arguments  */
     const coerce = (arg: string) => Array.isArray(arg) ? arg[arg.length - 1] : arg
-    const args = await yargs()
+    await yargs()
         /* eslint @stylistic/indent: off */
         .usage("Usage: $0 [<global-options>] <command> [<command-options>] [<command-arguments>]")
         .version(false)
