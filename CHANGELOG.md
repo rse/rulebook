@@ -2,6 +2,11 @@
 ChangeLog
 =========
 
+0.8.4 (2025-12-01)
+------------------
+
+- IMPROVEMENT: align browser and print rendering as close as possible
+
 0.8.3 (2025-11-30)
 ------------------
 
