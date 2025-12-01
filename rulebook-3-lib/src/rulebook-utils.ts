@@ -4,6 +4,11 @@
 **  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
 */
 
+/*  helper function for typed object keys  */
+export const typedKeys = <T extends object>(obj: T): Array<keyof T> => {
+    return Object.keys(obj) as Array<keyof T>
+}
+
 /*  helper class for generation of nested text  */
 export class Generator {
     private content: (string | Generator)[] = []

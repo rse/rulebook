@@ -15,6 +15,7 @@ import {
     type RulebookArtifact,
     type RulebookArtifactCST
 } from "./rulebook"
+import * as utils from "./rulebook-utils"
 import {
     type IndexType,
     IndexSchema,
@@ -169,11 +170,6 @@ export class RulebookParser {
         this.repo.addAspect(aspect as RulebookArtifact<AspectType>)
     }
 
-    /*  helper function for typed object keys  */
-    private typedKeys<T extends object> (obj: T): Array<keyof T> {
-        return Object.keys(obj) as Array<keyof T>
-    }
-
     /*  helper function for checking aspect references  */
     private checkRefAspect (
         where:    string,
@@ -201,7 +197,7 @@ export class RulebookParser {
                 column: pos?.column ?? 1
             })
         if (sub !== undefined) {
-            const assessment = this.typedKeys(aspect.obj.Assessment).find((key) =>
+            const assessment = utils.typedKeys(aspect.obj.Assessment).find((key) =>
                 aspect.obj.Assessment[key]?.Id === sub)
             if (assessment === undefined)
                 throw new RulebookParseError(`${where}: ${path.join(".")} must be a valid reference: ` +
@@ -253,7 +249,7 @@ export class RulebookParser {
         /*  check all context references in aspect assessments  */
         const aspects = this.repo.getAspects()
         for (const aspect of aspects) {
-            for (const key of this.typedKeys(aspect.obj.Assessment)) {
+            for (const key of utils.typedKeys(aspect.obj.Assessment)) {
                 const assessment = aspect.obj.Assessment[key]
                 if (assessment === undefined)
                     continue

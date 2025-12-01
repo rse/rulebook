@@ -14,7 +14,7 @@ import iconSVG               from "../../rulebook-2-rnd/dst-stage1/rulebook-icon
 import templateHTML          from "../../rulebook-2-rnd/dst-stage1/rulebook.html?raw"
 import templateCSS           from "../../rulebook-2-rnd/dst-stage1/rulebook.css?raw"
 import templateJS            from "../../rulebook-2-rnd/dst-stage2/rulebook.umd.js?raw"
-import { Generator }         from "./rulebook-utils"
+import * as utils            from "./rulebook-utils"
 
 /*  internal dependencies  */
 import {
@@ -77,11 +77,6 @@ export class RulebookGenerator {
             throw new Error(`bad reference: "${ref}"`)
     }
 
-    /*  helper function for typed object keys  */
-    private typedKeys<T extends object> (obj: T): Array<keyof T> {
-        return Object.keys(obj) as Array<keyof T>
-    }
-
     /*  generate HTML output  */
     async print (format = "card") {
         /*  sanity check  */
@@ -90,7 +85,7 @@ export class RulebookGenerator {
             throw new Error("index still not loaded")
 
         /*  start generator  */
-        const html = new Generator()
+        const html = new utils.Generator()
 
         /*  generate prolog  */
         this.printProlog(html)
@@ -123,7 +118,7 @@ export class RulebookGenerator {
     }
 
     /*  generate HTML output for prolog  */
-    private async printProlog (html: Generator) {
+    private async printProlog (html: utils.Generator) {
         const index = this.repo.getIndex()!
         html.group("<div class=\"footer\">", "</div>", (html) => {
             html.add(`<div class="left">${index.obj.Name} (${index.obj.Id}) ${index.obj.Version}</div>`)
@@ -191,7 +186,7 @@ export class RulebookGenerator {
     }
 
     /*  generate HTML output for epilog  */
-    private async printEpilog (html: Generator) {
+    private async printEpilog (html: utils.Generator) {
         //  const index = this.repo.getIndex()!
         html.group("<div class=\"epilog\">", "</div>", (html) => {
             /*
@@ -213,7 +208,7 @@ export class RulebookGenerator {
     }
 
     /*  generate HTML output for Card format  */
-    private async printCard (html: Generator) {
+    private async printCard (html: utils.Generator) {
         /*  generate individual aspects  */
         html.group("<div class=\"content content-card\">", "</div>", (html) => {
             const aspects = this.repo.getAspects()
@@ -253,7 +248,7 @@ export class RulebookGenerator {
                     })
                     html.add("<div class=\"subtitle\">ASSESSMENT</div>")
                     html.group("<div class=\"assessment\">", "</div>", (html) => {
-                        const assessmentLevels = this.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))
+                        const assessmentLevels = utils.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))
                         const assessments = assessmentLevels
                             .map((key) => aspect.obj.Assessment[key])
                             .filter((ass) => ass !== undefined)
@@ -379,7 +374,7 @@ export class RulebookGenerator {
     }
 
     /*  generate HTML output for Prose format  */
-    private async printProse (html: Generator) {
+    private async printProse (html: utils.Generator) {
         /*  generate individual aspects  */
         const aspects = this.repo.getAspects()
         html.group("<div class=\"content content-prose\">", "</div>", (html) => {
@@ -399,7 +394,7 @@ export class RulebookGenerator {
                             const objective = this.md2html(aspect.obj.Objective ?? "(no objective)")
                             html.add(`<span class="objective">${objective}</span>`)
                             html.group("<ul>", "</ul>", (html) => {
-                                for (const level of this.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))) {
+                                for (const level of utils.typedKeys(aspect.obj.Assessment).toSorted((a, b) => b.localeCompare(a))) {
                                     const assessment = aspect.obj.Assessment[level]!
                                     const types = [ "MUST", "SHOULD", "MAY"  ] as const
                                     const idx = assessment.Assess?.findIndex((a) => types.some((x) => a[x] !== undefined)) ?? -1
@@ -448,7 +443,7 @@ export class RulebookGenerator {
     }
 
     /*  generate HTML output for Simple format  */
-    private async printSimple (html: Generator) {
+    private async printSimple (html: utils.Generator) {
         /*  generate individual aspects  */
         const aspects = this.repo.getAspects()
         html.group("<div class=\"content content-simple\">", "</div>", (html) => {
@@ -457,9 +452,9 @@ export class RulebookGenerator {
                 for (const aspect of aspects) {
                     if (aspect.obj.Objective !== undefined)
                         throw new Error("print format \"simple\" does not support aspect Objective")
-                    if (this.typedKeys(aspect.obj.Assessment).length !== 1)
+                    if (utils.typedKeys(aspect.obj.Assessment).length !== 1)
                         throw new Error("print format \"simple\" supports assessment with a single level only")
-                    const level = this.typedKeys(aspect.obj.Assessment)[0]
+                    const level = utils.typedKeys(aspect.obj.Assessment)[0]
                     const assessment = aspect.obj.Assessment[level]!
                     html.group("<li>", "</li>", (html) => {
                         html.group("<span class=\"aspect aspect-simple\">", "</span>", (html) => {
