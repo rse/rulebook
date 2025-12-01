@@ -130,8 +130,7 @@ const cmdPreview = async (
 /*  establish asynchronous environment  */
 ;(async () => {
     /*  determine system paths  */
-    /* eslint no-unused-vars: off */
-    const { dataDir } = syspath({
+    const { dataDir: _dataDir } = syspath({
         appName: "rulebook",
         dataDirAutoCreate: true
     })
